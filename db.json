@@ -1,0 +1,131 @@
+{
+  "users": [
+    {
+      "id": "asdasa",
+      "name": "Alice",
+      "lastName": "Thompson",
+      "email": "aThompson@gmail.com",
+      "password": "a",
+      "role": "client",
+      "phone": ["813", "500", "2587"],
+      "isActive": "true"
+    },
+    {
+      "id": "gfgrty",
+      "name": "Bob",
+      "lastName": "Martinez",
+      "email": "bbmartinez@gmail.com",
+      "password": "a",
+      "role": "client",
+      "phone": ["813", "300", "5699"],
+      "isActive": "false"
+    },
+    {
+      "id": "jhyqw",
+      "name": "Sophia",
+      "lastName": "Reynolds",
+      "email": "sreynolds@gmail.com",
+      "password": "a",
+      "role": "client",
+      "phone": ["813", "564", "0214"],
+      "isActive": "true"
+    },
+    {
+      "id": "bnhjhk",
+      "name": "James",
+      "lastName": "Carter",
+      "email": "jCarter@gmail.com",
+      "password": "a",
+      "role": "worker",
+      "phone": ["813", "279", "9512"],
+      "isActive": "true"
+    },
+    {
+      "id": "asdgcccqw",
+      "name": "Emma",
+      "lastName": "Sinclair",
+      "email": "eSinclair@gmail.com",
+      "password": "a",
+      "role": "worker",
+      "phone": ["813", "5471", "3647"],
+      "isActive": "false"
+    },
+    {
+      "id": "iudfxwa",
+      "name": "Emma",
+      "lastName": "Smith",
+      "email": "eSmith@gmail.com",
+      "password": "a",
+      "role": "worker",
+      "phone": ["813", "341", "3897"],
+      "isActive": "true"
+    }
+  ],
+  "products": [
+    {
+      "id": "asdf",
+      "type": "bag",
+      "image": "./src/images/bag-01.png",
+      "price": 6.99
+    },
+    {
+      "id": "gfhjfe",
+      "type": "mug",
+      "image": "./src/images/couple-2.png",
+      "price": 25.99
+    },
+    {
+      "id": "puouoi",
+      "type": "bag",
+      "image": "./src/images/bag-02.png",
+      "price": 4.99
+    },
+    {
+      "id": "qazwsd",
+      "type": "t-shirt",
+      "image": "./src/images/shirt-02.png",
+      "price": 19.99
+    }
+  ],
+  "orders": [
+    {
+      "id": "asdadzxc",
+      "clientId": "string",
+      "workerId": "string | undefined",
+      "deadLine": "Temporal.Instant",
+      "status": "in_cart | ordered | processing | ready | sold"
+    },
+    {
+      "id": "01",
+      "clientId": "asdasa",
+      "productId": ["asdf", "gfhjfe"],
+      "workerId": "undefined",
+      "deadLine": "undefined",
+      "status": "in_cart"
+    },
+    {
+      "id": "02",
+      "clientId": "gfgrty",
+      "productId": ["asdf"],
+      "workerId": "undefined",
+      "deadLine": "YYYY-MM-DDTHH-MM-SSZ",
+      "status": "ordered"
+    },
+    {
+      "id": "03",
+      "clientId": "jhyqw",
+      "productId": ["puouoi"],
+      "workerId": "bnhjhk",
+      "deadLine": "YYYY-MM-DDTHH-MM-SSZ",
+      "status": "processing"
+    },
+    {
+      "id": "04",
+      "clientId": "asdasa",
+      "productId": ["gfhjfe"],
+      "workerId": "asdgcccqw",
+      "deadLine": "YYYY-MM-DDTHH-MM-SSZ",
+      "status": "ready"
+    }
+  ]
+}
