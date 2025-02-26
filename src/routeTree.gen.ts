@@ -13,11 +13,11 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as RegisterImport } from './routes/register'
 import { Route as LoginImport } from './routes/login'
-import { Route as HomeImport } from './routes/home'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
-import { Route as UsersIndexImport } from './routes/users/index'
-import { Route as UsersUserIdImport } from './routes/users/$userId'
+import { Route as WorkerUserIndexImport } from './routes/workerUser/index'
+import { Route as ClientUserIndexImport } from './routes/clientUser/index'
+import { Route as AdminUserIndexImport } from './routes/adminUser/index'
 
 // Create/Update Routes
 
@@ -33,12 +33,6 @@ const LoginRoute = LoginImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const HomeRoute = HomeImport.update({
-  id: '/home',
-  path: '/home',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const AboutRoute = AboutImport.update({
   id: '/about',
   path: '/about',
@@ -51,15 +45,21 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const UsersIndexRoute = UsersIndexImport.update({
-  id: '/users/',
-  path: '/users/',
+const WorkerUserIndexRoute = WorkerUserIndexImport.update({
+  id: '/workerUser/',
+  path: '/workerUser/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const UsersUserIdRoute = UsersUserIdImport.update({
-  id: '/users/$userId',
-  path: '/users/$userId',
+const ClientUserIndexRoute = ClientUserIndexImport.update({
+  id: '/clientUser/',
+  path: '/clientUser/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AdminUserIndexRoute = AdminUserIndexImport.update({
+  id: '/adminUser/',
+  path: '/adminUser/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -81,13 +81,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
-    '/home': {
-      id: '/home'
-      path: '/home'
-      fullPath: '/home'
-      preLoaderRoute: typeof HomeImport
-      parentRoute: typeof rootRoute
-    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -102,18 +95,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
-    '/users/$userId': {
-      id: '/users/$userId'
-      path: '/users/$userId'
-      fullPath: '/users/$userId'
-      preLoaderRoute: typeof UsersUserIdImport
+    '/adminUser/': {
+      id: '/adminUser/'
+      path: '/adminUser'
+      fullPath: '/adminUser'
+      preLoaderRoute: typeof AdminUserIndexImport
       parentRoute: typeof rootRoute
     }
-    '/users/': {
-      id: '/users/'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof UsersIndexImport
+    '/clientUser/': {
+      id: '/clientUser/'
+      path: '/clientUser'
+      fullPath: '/clientUser'
+      preLoaderRoute: typeof ClientUserIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/workerUser/': {
+      id: '/workerUser/'
+      path: '/workerUser'
+      fullPath: '/workerUser'
+      preLoaderRoute: typeof WorkerUserIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -124,32 +124,32 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/home': typeof HomeRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
-  '/users/$userId': typeof UsersUserIdRoute
-  '/users': typeof UsersIndexRoute
+  '/adminUser': typeof AdminUserIndexRoute
+  '/clientUser': typeof ClientUserIndexRoute
+  '/workerUser': typeof WorkerUserIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/home': typeof HomeRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
-  '/users/$userId': typeof UsersUserIdRoute
-  '/users': typeof UsersIndexRoute
+  '/adminUser': typeof AdminUserIndexRoute
+  '/clientUser': typeof ClientUserIndexRoute
+  '/workerUser': typeof WorkerUserIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/home': typeof HomeRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
-  '/users/$userId': typeof UsersUserIdRoute
-  '/users/': typeof UsersIndexRoute
+  '/adminUser/': typeof AdminUserIndexRoute
+  '/clientUser/': typeof ClientUserIndexRoute
+  '/workerUser/': typeof WorkerUserIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -157,50 +157,50 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
-    | '/home'
     | '/login'
     | '/register'
-    | '/users/$userId'
-    | '/users'
+    | '/adminUser'
+    | '/clientUser'
+    | '/workerUser'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/home'
     | '/login'
     | '/register'
-    | '/users/$userId'
-    | '/users'
+    | '/adminUser'
+    | '/clientUser'
+    | '/workerUser'
   id:
     | '__root__'
     | '/'
     | '/about'
-    | '/home'
     | '/login'
     | '/register'
-    | '/users/$userId'
-    | '/users/'
+    | '/adminUser/'
+    | '/clientUser/'
+    | '/workerUser/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  HomeRoute: typeof HomeRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
-  UsersUserIdRoute: typeof UsersUserIdRoute
-  UsersIndexRoute: typeof UsersIndexRoute
+  AdminUserIndexRoute: typeof AdminUserIndexRoute
+  ClientUserIndexRoute: typeof ClientUserIndexRoute
+  WorkerUserIndexRoute: typeof WorkerUserIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  HomeRoute: HomeRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
-  UsersUserIdRoute: UsersUserIdRoute,
-  UsersIndexRoute: UsersIndexRoute,
+  AdminUserIndexRoute: AdminUserIndexRoute,
+  ClientUserIndexRoute: ClientUserIndexRoute,
+  WorkerUserIndexRoute: WorkerUserIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -215,11 +215,11 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
-        "/home",
         "/login",
         "/register",
-        "/users/$userId",
-        "/users/"
+        "/adminUser/",
+        "/clientUser/",
+        "/workerUser/"
       ]
     },
     "/": {
@@ -228,20 +228,20 @@ export const routeTree = rootRoute
     "/about": {
       "filePath": "about.tsx"
     },
-    "/home": {
-      "filePath": "home.tsx"
-    },
     "/login": {
       "filePath": "login.tsx"
     },
     "/register": {
       "filePath": "register.tsx"
     },
-    "/users/$userId": {
-      "filePath": "users/$userId.tsx"
+    "/adminUser/": {
+      "filePath": "adminUser/index.jsx"
     },
-    "/users/": {
-      "filePath": "users/index.jsx"
+    "/clientUser/": {
+      "filePath": "clientUser/index.tsx"
+    },
+    "/workerUser/": {
+      "filePath": "workerUser/index.jsx"
     }
   }
 }

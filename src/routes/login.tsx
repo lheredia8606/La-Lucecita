@@ -32,8 +32,16 @@ function RouteComponent() {
       setShowModalError(true);
       setModalErrorMessage("Wrong password!");
     } else {
+      let toRoute = "";
+      if (user.role === "admin") {
+        toRoute = "/adminUser";
+      } else if (user.role === "worker") {
+        toRoute = "/workerUser";
+      } else {
+        toRoute = "/clientUser";
+      }
       setAuthenticatedUser(user);
-      router.navigate({ to: "/home" });
+      router.navigate({ to: toRoute });
     }
   };
 

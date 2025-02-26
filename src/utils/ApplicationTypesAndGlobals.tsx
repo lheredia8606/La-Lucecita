@@ -4,8 +4,8 @@ import { apiHandler } from "./apiHandler";
 //globals
 const baseUrl = "http://localhost:3000/";
 export const apiUser = apiHandler<TUser>(baseUrl, "users");
-export const apiProducts = apiHandler<TUser>(baseUrl, "products");
-export const apiOrders = apiHandler<TUser>(baseUrl, "orders");
+export const apiProducts = apiHandler<TProduct>(baseUrl, "products");
+export const apiOrders = apiHandler<TOrder>(baseUrl, "orders");
 
 //types
 export type TUser = {
@@ -21,8 +21,10 @@ export type TUser = {
 
 export type TProduct = {
   id: string;
+  name: string;
   type: "mug" | "t-shirt" | "bag";
   image: string;
+  inStock: boolean;
   price: number;
 };
 

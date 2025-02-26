@@ -1,14 +1,14 @@
 .card-container {
   display: flex;
-  flex-wrap: wrap; /* Allow items to wrap to the next row */
-  gap: 16px; /* Space between the cards */
+  flex-wrap: wrap;
+  gap: 16px;
   padding: 20px;
-  justify-content: center; /* Align items horizontally in the center */
+  justify-content: center;
 }
 
 .card-container .product-card {
-  flex: 1 1 250px; /* Allow the card to grow and shrink, with a base width of 250px */
-  max-width: 300px; /* Prevent cards from getting too wide */
+  flex: 1 1 250px;
+  max-width: 300px;
 }
 
 .product-card {
@@ -74,11 +74,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.8); /* Darker semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure the modal is on top of other elements */
+  z-index: 1000;
 }
 
 .modal-content {
@@ -88,28 +88,28 @@
 }
 
 .modal-image {
-  max-width: 90%; /* Limit max width of the image */
-  max-height: 90vh; /* Limit max height of the image */
-  object-fit: contain; /* Keep the aspect ratio of the image */
+  max-width: 90%;
+  max-height: 90vh;
+  object-fit: contain;
 }
 
 .close-button {
   position: absolute;
   top: 20px;
   right: 50px;
-  background-color: #007bff; /* Blue background */
-  color: white; /* White font color */
-  border: none; /* Remove default border */
-  font-size: 20px; /* Set font size (adjust for better centering) */
-  width: 40px; /* Set width of the circle */
-  height: 45px; /* Set height of the circle */
-  border-radius: 50%; /* Make the button round */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  font-size: 20px;
+  width: 40px;
+  height: 45px;
+  border-radius: 50%;
   display: flex;
-  justify-content: center; /* Center the "X" inside the circle */
-  align-items: center; /* Center the "X" inside the circle */
-  cursor: pointer; /* Pointer cursor on hover */
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 .close-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #0056b3;
 }

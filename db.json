@@ -4,7 +4,7 @@
       "id": "asdasa",
       "name": "Alice",
       "lastName": "Thompson",
-      "email": "aThompson@gmail.com",
+      "email": "client@gmail.com",
       "password": "a",
       "role": "client",
       "phone": ["813", "500", "2587"],
@@ -34,7 +34,7 @@
       "id": "bnhjhk",
       "name": "James",
       "lastName": "Carter",
-      "email": "jCarter@gmail.com",
+      "email": "worker@gmail.com",
       "password": "a",
       "role": "worker",
       "phone": ["813", "279", "9512"],
@@ -59,31 +59,49 @@
       "role": "worker",
       "phone": ["813", "341", "3897"],
       "isActive": "true"
+    },
+    {
+      "id": "asdbzli",
+      "name": "Admin",
+      "lastName": "Jhonson",
+      "email": "admin@gmail.com",
+      "password": "a",
+      "role": "admin",
+      "phone": ["813", "341", "3897"],
+      "isActive": "true"
     }
   ],
   "products": [
     {
       "id": "asdf",
       "type": "bag",
-      "image": "./src/images/bag-01.png",
+      "name": "some name 1",
+      "inStock": true,
+      "image": "./public/images/bag-01.png",
       "price": 6.99
     },
     {
       "id": "gfhjfe",
       "type": "mug",
-      "image": "./src/images/couple-2.png",
+      "name": "some name 2",
+      "inStock": true,
+      "image": "./public/images/couple-2.png",
       "price": 25.99
     },
     {
       "id": "puouoi",
       "type": "bag",
-      "image": "./src/images/bag-02.png",
+      "name": "some name 3",
+      "inStock": false,
+      "image": "./public/images/bag-02.png",
       "price": 4.99
     },
     {
       "id": "qazwsd",
       "type": "t-shirt",
-      "image": "./src/images/shirt-02.png",
+      "name": "some name 4",
+      "inStock": true,
+      "image": "./public/images/my-heart-belongs-to-him.png",
       "price": 19.99
     }
   ],

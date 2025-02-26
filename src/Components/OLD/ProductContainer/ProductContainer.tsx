@@ -1,26 +1,26 @@
 import { useState } from "react";
-import { TProduct } from "../../types/ApplicationTypes";
-import { ProductCard } from "../ProductCard/ProductCard";
+import { ProductCard } from "../../ProductCard/ProductCard";
+import { TProduct } from "../../../utils/ApplicationTypesAndGlobals";
 
 const products: TProduct[] = [
-  {
-    id: "01",
-    type: "mug",
-    image: "./src/images/bag-01.png",
-    price: 19.99,
-  },
-  {
-    id: "03",
-    type: "mug",
-    image: "./src/images/couple-2.png",
-    price: 25.99,
-  },
-  {
-    id: "02",
-    type: "bag",
-    image: "./src/images/bag-02.png",
-    price: 19.99,
-  },
+  // {
+  //   id: "01",
+  //   type: "mug",
+  //   image: "./src/images/bag-01.png",
+  //   price: 19.99,
+  // },
+  // {
+  //   id: "03",
+  //   type: "mug",
+  //   image: "./src/images/couple-2.png",
+  //   price: 25.99,
+  // },
+  // {
+  //   id: "02",
+  //   type: "bag",
+  //   image: "./src/images/bag-02.png",
+  //   price: 19.99,
+  // },
 ];
 export const ProductContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
