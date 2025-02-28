@@ -1,5 +1,4 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { UserButton } from "../../Components/UserButton/UserButton";
 import { useUser } from "../../Providers/UserProvider";
 import { useEffect } from "react";
 
@@ -18,15 +17,7 @@ function RouteComponent() {
   });
   return (
     <>
-      <div className="user-container">
-        <div className="button-container">
-          <UserButton btnText="My orders" />
-          <UserButton btnText="Active orders" />
-          <UserButton btnText="Button3" />
-          <UserButton btnText="button4" />
-        </div>
-        <div className="content-container">Hello</div>
-      </div>
+      <h1>Hello worker</h1>
     </>
   );
 }

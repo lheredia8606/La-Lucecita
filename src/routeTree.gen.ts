@@ -18,6 +18,8 @@ import { Route as IndexImport } from './routes/index'
 import { Route as WorkerUserIndexImport } from './routes/workerUser/index'
 import { Route as ClientUserIndexImport } from './routes/clientUser/index'
 import { Route as AdminUserIndexImport } from './routes/adminUser/index'
+import { Route as ClientUserUserButtonContainerImport } from './routes/clientUser/UserButtonContainer'
+import { Route as ClientUserOrdersIndexImport } from './routes/clientUser/orders/index'
 
 // Create/Update Routes
 
@@ -63,6 +65,19 @@ const AdminUserIndexRoute = AdminUserIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ClientUserUserButtonContainerRoute =
+  ClientUserUserButtonContainerImport.update({
+    id: '/clientUser/UserButtonContainer',
+    path: '/clientUser/UserButtonContainer',
+    getParentRoute: () => rootRoute,
+  } as any)
+
+const ClientUserOrdersIndexRoute = ClientUserOrdersIndexImport.update({
+  id: '/clientUser/orders/',
+  path: '/clientUser/orders/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -95,6 +110,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
+    '/clientUser/UserButtonContainer': {
+      id: '/clientUser/UserButtonContainer'
+      path: '/clientUser/UserButtonContainer'
+      fullPath: '/clientUser/UserButtonContainer'
+      preLoaderRoute: typeof ClientUserUserButtonContainerImport
+      parentRoute: typeof rootRoute
+    }
     '/adminUser/': {
       id: '/adminUser/'
       path: '/adminUser'
@@ -116,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkerUserIndexImport
       parentRoute: typeof rootRoute
     }
+    '/clientUser/orders/': {
+      id: '/clientUser/orders/'
+      path: '/clientUser/orders'
+      fullPath: '/clientUser/orders'
+      preLoaderRoute: typeof ClientUserOrdersIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -126,9 +155,11 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/clientUser/UserButtonContainer': typeof ClientUserUserButtonContainerRoute
   '/adminUser': typeof AdminUserIndexRoute
   '/clientUser': typeof ClientUserIndexRoute
   '/workerUser': typeof WorkerUserIndexRoute
+  '/clientUser/orders': typeof ClientUserOrdersIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -136,9 +167,11 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/clientUser/UserButtonContainer': typeof ClientUserUserButtonContainerRoute
   '/adminUser': typeof AdminUserIndexRoute
   '/clientUser': typeof ClientUserIndexRoute
   '/workerUser': typeof WorkerUserIndexRoute
+  '/clientUser/orders': typeof ClientUserOrdersIndexRoute
 }
 
 export interface FileRoutesById {
@@ -147,9 +180,11 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/clientUser/UserButtonContainer': typeof ClientUserUserButtonContainerRoute
   '/adminUser/': typeof AdminUserIndexRoute
   '/clientUser/': typeof ClientUserIndexRoute
   '/workerUser/': typeof WorkerUserIndexRoute
+  '/clientUser/orders/': typeof ClientUserOrdersIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -159,27 +194,33 @@ export interface FileRouteTypes {
     | '/about'
     | '/login'
     | '/register'
+    | '/clientUser/UserButtonContainer'
     | '/adminUser'
     | '/clientUser'
     | '/workerUser'
+    | '/clientUser/orders'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/login'
     | '/register'
+    | '/clientUser/UserButtonContainer'
     | '/adminUser'
     | '/clientUser'
     | '/workerUser'
+    | '/clientUser/orders'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/login'
     | '/register'
+    | '/clientUser/UserButtonContainer'
     | '/adminUser/'
     | '/clientUser/'
     | '/workerUser/'
+    | '/clientUser/orders/'
   fileRoutesById: FileRoutesById
 }
 
@@ -188,9 +229,11 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
+  ClientUserUserButtonContainerRoute: typeof ClientUserUserButtonContainerRoute
   AdminUserIndexRoute: typeof AdminUserIndexRoute
   ClientUserIndexRoute: typeof ClientUserIndexRoute
   WorkerUserIndexRoute: typeof WorkerUserIndexRoute
+  ClientUserOrdersIndexRoute: typeof ClientUserOrdersIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -198,9 +241,11 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
+  ClientUserUserButtonContainerRoute: ClientUserUserButtonContainerRoute,
   AdminUserIndexRoute: AdminUserIndexRoute,
   ClientUserIndexRoute: ClientUserIndexRoute,
   WorkerUserIndexRoute: WorkerUserIndexRoute,
+  ClientUserOrdersIndexRoute: ClientUserOrdersIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -217,9 +262,11 @@ export const routeTree = rootRoute
         "/about",
         "/login",
         "/register",
+        "/clientUser/UserButtonContainer",
         "/adminUser/",
         "/clientUser/",
-        "/workerUser/"
+        "/workerUser/",
+        "/clientUser/orders/"
       ]
     },
     "/": {
@@ -234,6 +281,9 @@ export const routeTree = rootRoute
     "/register": {
       "filePath": "register.tsx"
     },
+    "/clientUser/UserButtonContainer": {
+      "filePath": "clientUser/UserButtonContainer.jsx"
+    },
     "/adminUser/": {
       "filePath": "adminUser/index.jsx"
     },
@@ -242,6 +292,9 @@ export const routeTree = rootRoute
     },
     "/workerUser/": {
       "filePath": "workerUser/index.jsx"
+    },
+    "/clientUser/orders/": {
+      "filePath": "clientUser/orders/index.jsx"
     }
   }
 }

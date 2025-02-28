@@ -1,14 +1,45 @@
-import { Link, Outlet, createRootRoute } from "@tanstack/react-router";
+import {
+  Link,
+  Outlet,
+  createRootRoute,
+  useRouter,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { useUser } from "../Providers/UserProvider";
 import "./root-style.css";
+import { useEffect } from "react";
 
 export const Route = createRootRoute({
   component: RootComponent,
 });
 
 function RootComponent() {
-  const { authenticatedUser, setAuthenticatedUser } = useUser();
+  const { authenticatedUser, setAuthenticatedUser, allUsers } = useUser();
+  const router = useRouter();
+  const goToMyPage = () => {
+    if (!authenticatedUser) {
+      router.navigate({ to: "/" });
+    }
+    if (authenticatedUser?.role === "admin") {
+      router.navigate({ to: "/adminUser" });
+    } else if (authenticatedUser?.role === "client") {
+      router.navigate({ to: "/clientUser" });
+    } else if (authenticatedUser?.role === "worker") {
+      router.navigate({ to: "/workerUser" });
+    }
+  };
+  useEffect(() => {
+    const currentUserId = localStorage.getItem("authenticatedUser");
+    if (!currentUserId) return;
+    try {
+      const foundUser = allUsers?.find((user) => user.id === currentUserId);
+      if (foundUser) {
+        setAuthenticatedUser(foundUser);
+      }
+    } catch (error) {
+      console.error("Failed to parse currentUser from localStorage", error);
+    }
+  }, [allUsers]);
   return (
     <>
       <header className="header">
@@ -26,9 +57,13 @@ function RootComponent() {
                 Home
               </Link>
             </li>
-            <li>
-              <a href="#">About</a>
-            </li>
+            {authenticatedUser && (
+              <li>
+                <a style={{ cursor: "pointer" }} onClick={goToMyPage}>
+                  My Page
+                </a>
+              </li>
+            )}
             <li>
               <a href="#">Services</a>
             </li>

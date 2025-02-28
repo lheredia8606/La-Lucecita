@@ -32,6 +32,7 @@ function RouteComponent() {
       setShowModalError(true);
       setModalErrorMessage("Wrong password!");
     } else {
+      localStorage.setItem("authenticatedUser", user.id);
       let toRoute = "";
       if (user.role === "admin") {
         toRoute = "/adminUser";
