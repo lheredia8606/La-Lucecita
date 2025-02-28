@@ -14,7 +14,7 @@ export const Route = createFileRoute("/login")({
 });
 
 function RouteComponent() {
-  const { allUsers, authenticatedUser, setAuthenticatedUser } = useUser();
+  const { allUsers, setAuthenticatedUser } = useUser();
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [showModalError, setShowModalError] = useState<boolean>(false);
@@ -61,7 +61,7 @@ function RouteComponent() {
             <button
               className="close-btn"
               onClick={() => {
-                router.navigate({ to: "/home" });
+                router.navigate({ to: "/" });
               }}
             >
               X

@@ -1,4 +1,4 @@
-import { TProduct } from "../../types/ApplicationTypes";
+import { TProduct } from "../../utils/ApplicationTypesAndGlobals";
 import "./ProductCard.css";
 
 type TProductCardProps = {

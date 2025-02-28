@@ -73,7 +73,7 @@ function RouteComponent() {
               {isModalOpen && (
                 <div className="modal-overlay" onClick={handleCloseModal}>
                   <div
-                    className="modal-content"
+                    className="modal-content product-modal-content"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <img
