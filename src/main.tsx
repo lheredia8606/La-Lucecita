@@ -5,6 +5,7 @@ import { routeTree } from "./routeTree.gen";
 import { UserProvider } from "./Providers/UserProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ProductProvider } from "./Providers/ProductProvider";
+import { OrderProvider } from "./Providers/OrderProvider";
 
 // Set up a Router instance
 const router = createRouter({
@@ -30,7 +31,9 @@ if (!rootElement.innerHTML) {
       <QueryClientProvider client={queryClient}>
         <UserProvider>
           <ProductProvider>
-            <RouterProvider router={router} />
+            <OrderProvider>
+              <RouterProvider router={router} />
+            </OrderProvider>
           </ProductProvider>
         </UserProvider>
       </QueryClientProvider>

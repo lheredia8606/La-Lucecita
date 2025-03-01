@@ -107,13 +107,6 @@
   ],
   "orders": [
     {
-      "id": "asdadzxc",
-      "clientId": "string",
-      "workerId": "string | undefined",
-      "deadLine": "Temporal.Instant",
-      "status": "in_cart | ordered | processing | ready | sold"
-    },
-    {
       "id": "01",
       "clientId": "asdasa",
       "productId": ["asdf", "gfhjfe"],

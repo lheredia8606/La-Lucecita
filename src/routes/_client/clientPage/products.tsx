@@ -10,14 +10,14 @@ export const Route = createFileRoute("/_client/clientPage/products")({
 function RouteComponent() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState("");
-  const { products } = useProducts();
+  const { allProducts } = useProducts();
   const handleCloseModal = () => {
     setIsModalOpen(false); // Close modal
   };
   return (
     <>
       <div className="card-container">
-        {products.map((product) => {
+        {allProducts.map((product) => {
           return (
             <ProductCard
               product={product}

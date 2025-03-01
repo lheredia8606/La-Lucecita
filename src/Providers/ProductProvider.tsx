@@ -10,24 +10,31 @@ import { ReactNode } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 
 type TContextProps = {
-  products: TProduct[];
+  allProducts: TProduct[];
+  getProductById: (id: string) => TProduct | undefined;
 };
 const productContext = createContext({} as TContextProps);
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
-  const [products, setProducts] = useState<TProduct[]>([]);
+  const [allProducts, setAllProducts] = useState<TProduct[]>([]);
 
   const { data: fetchedProducts } = useQuery({
     queryKey: ["getAllProducts"],
     queryFn: () => apiProducts.getAll(),
   });
 
+  const getProductById = (id: string): TProduct | undefined => {
+    return allProducts.find((product) => {
+      return product.id === id;
+    });
+  };
+
   useEffect(() => {
     if (fetchedProducts) {
-      setProducts(fetchedProducts);
+      setAllProducts(fetchedProducts);
     }
   }, [fetchedProducts]);
   return (
-    <productContext.Provider value={{ products }}>
+    <productContext.Provider value={{ allProducts, getProductById }}>
       {children}
     </productContext.Provider>
   );
