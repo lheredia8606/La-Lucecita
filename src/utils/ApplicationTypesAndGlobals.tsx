@@ -1,5 +1,6 @@
 import { Temporal } from "@js-temporal/polyfill";
 import { apiHandler } from "./apiHandler";
+import { ButtonHTMLAttributes } from "react";
 
 //globals
 const baseUrl = "http://localhost:3000/";
@@ -35,4 +36,10 @@ export type TOrder = {
   workerId: string | undefined;
   deadLine: Temporal.Instant;
   status: "in_cart" | "ordered" | "processing" | "ready" | "done";
+};
+
+export type TButtonProps = {
+  buttonProps: ButtonHTMLAttributes<HTMLButtonElement>;
+  btnText: string;
+  navigateTo: string;
 };

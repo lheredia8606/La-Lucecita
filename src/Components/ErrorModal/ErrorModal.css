@@ -38,7 +38,7 @@
   font-size: 20px;
 }
 
-h2 {
+.error-close-btn h2 {
   font-size: 18px;
   color: red;
 }

@@ -1,14 +1,21 @@
-import { ButtonHTMLAttributes } from "react";
-import "./custom-button.css";
+import "./buttons-container.css";
+import { TButtonProps } from "../../utils/ApplicationTypesAndGlobals";
+import { useRouter } from "@tanstack/react-router";
 
-type TButtonProps = {
-  buttonProps: ButtonHTMLAttributes<HTMLButtonElement>;
-  btnText: string;
-};
-export const CustomButton = ({ buttonProps, btnText }: TButtonProps) => {
+export const CustomButton = ({
+  buttonProps,
+  btnText,
+  navigateTo,
+}: TButtonProps) => {
+  const router = useRouter();
   return (
     <>
-      <button className="custom-btn" {...buttonProps}>
+      <button
+        {...buttonProps}
+        onClick={() => {
+          router.navigate({ to: navigateTo });
+        }}
+      >
         {btnText}
       </button>
     </>

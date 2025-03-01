@@ -77,7 +77,7 @@
       "type": "bag",
       "name": "some name 1",
       "inStock": true,
-      "image": "./public/images/bag-01.png",
+      "image": "/public/images/bag-01.png",
       "price": 6.99
     },
     {
@@ -85,7 +85,7 @@
       "type": "mug",
       "name": "some name 2",
       "inStock": true,
-      "image": "./public/images/couple-2.png",
+      "image": "/public/images/couple-2.png",
       "price": 25.99
     },
     {
@@ -93,7 +93,7 @@
       "type": "bag",
       "name": "some name 3",
       "inStock": false,
-      "image": "./public/images/bag-02.png",
+      "image": "/public/images/bag-02.png",
       "price": 4.99
     },
     {
@@ -101,7 +101,7 @@
       "type": "t-shirt",
       "name": "some name 4",
       "inStock": true,
-      "image": "./public/images/my-heart-belongs-to-him.png",
+      "image": "/public/images/my-heart-belongs-to-him.png",
       "price": 19.99
     }
   ],

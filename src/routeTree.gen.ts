@@ -16,10 +16,14 @@ import { Route as LoginImport } from './routes/login'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as WorkerUserIndexImport } from './routes/workerUser/index'
-import { Route as ClientUserIndexImport } from './routes/clientUser/index'
 import { Route as AdminUserIndexImport } from './routes/adminUser/index'
-import { Route as ClientUserUserButtonContainerImport } from './routes/clientUser/UserButtonContainer'
-import { Route as ClientUserOrdersIndexImport } from './routes/clientUser/orders/index'
+import { Route as LayoutsVisibleLayoutImport } from './routes/layouts/visibleLayout'
+import { Route as ClientClientPageImport } from './routes/_client/clientPage'
+import { Route as LayoutsVisibleLayoutFooImport } from './routes/layouts/visibleLayout/foo'
+import { Route as LayoutsVisibleLayoutBarImport } from './routes/layouts/visibleLayout/bar'
+import { Route as ClientClientPageProductsImport } from './routes/_client/clientPage/products'
+import { Route as ClientClientPageMyOrdersImport } from './routes/_client/clientPage/myOrders'
+import { Route as ClientClientPageMyCartImport } from './routes/_client/clientPage/myCart'
 
 // Create/Update Routes
 
@@ -53,29 +57,52 @@ const WorkerUserIndexRoute = WorkerUserIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const ClientUserIndexRoute = ClientUserIndexImport.update({
-  id: '/clientUser/',
-  path: '/clientUser/',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const AdminUserIndexRoute = AdminUserIndexImport.update({
   id: '/adminUser/',
   path: '/adminUser/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const ClientUserUserButtonContainerRoute =
-  ClientUserUserButtonContainerImport.update({
-    id: '/clientUser/UserButtonContainer',
-    path: '/clientUser/UserButtonContainer',
-    getParentRoute: () => rootRoute,
-  } as any)
-
-const ClientUserOrdersIndexRoute = ClientUserOrdersIndexImport.update({
-  id: '/clientUser/orders/',
-  path: '/clientUser/orders/',
+const LayoutsVisibleLayoutRoute = LayoutsVisibleLayoutImport.update({
+  id: '/layouts/visibleLayout',
+  path: '/layouts/visibleLayout',
   getParentRoute: () => rootRoute,
+} as any)
+
+const ClientClientPageRoute = ClientClientPageImport.update({
+  id: '/_client/clientPage',
+  path: '/clientPage',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LayoutsVisibleLayoutFooRoute = LayoutsVisibleLayoutFooImport.update({
+  id: '/foo',
+  path: '/foo',
+  getParentRoute: () => LayoutsVisibleLayoutRoute,
+} as any)
+
+const LayoutsVisibleLayoutBarRoute = LayoutsVisibleLayoutBarImport.update({
+  id: '/bar',
+  path: '/bar',
+  getParentRoute: () => LayoutsVisibleLayoutRoute,
+} as any)
+
+const ClientClientPageProductsRoute = ClientClientPageProductsImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => ClientClientPageRoute,
+} as any)
+
+const ClientClientPageMyOrdersRoute = ClientClientPageMyOrdersImport.update({
+  id: '/myOrders',
+  path: '/myOrders',
+  getParentRoute: () => ClientClientPageRoute,
+} as any)
+
+const ClientClientPageMyCartRoute = ClientClientPageMyCartImport.update({
+  id: '/myCart',
+  path: '/myCart',
+  getParentRoute: () => ClientClientPageRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -110,11 +137,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
-    '/clientUser/UserButtonContainer': {
-      id: '/clientUser/UserButtonContainer'
-      path: '/clientUser/UserButtonContainer'
-      fullPath: '/clientUser/UserButtonContainer'
-      preLoaderRoute: typeof ClientUserUserButtonContainerImport
+    '/_client/clientPage': {
+      id: '/_client/clientPage'
+      path: '/clientPage'
+      fullPath: '/clientPage'
+      preLoaderRoute: typeof ClientClientPageImport
+      parentRoute: typeof rootRoute
+    }
+    '/layouts/visibleLayout': {
+      id: '/layouts/visibleLayout'
+      path: '/layouts/visibleLayout'
+      fullPath: '/layouts/visibleLayout'
+      preLoaderRoute: typeof LayoutsVisibleLayoutImport
       parentRoute: typeof rootRoute
     }
     '/adminUser/': {
@@ -124,13 +158,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUserIndexImport
       parentRoute: typeof rootRoute
     }
-    '/clientUser/': {
-      id: '/clientUser/'
-      path: '/clientUser'
-      fullPath: '/clientUser'
-      preLoaderRoute: typeof ClientUserIndexImport
-      parentRoute: typeof rootRoute
-    }
     '/workerUser/': {
       id: '/workerUser/'
       path: '/workerUser'
@@ -138,28 +165,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkerUserIndexImport
       parentRoute: typeof rootRoute
     }
-    '/clientUser/orders/': {
-      id: '/clientUser/orders/'
-      path: '/clientUser/orders'
-      fullPath: '/clientUser/orders'
-      preLoaderRoute: typeof ClientUserOrdersIndexImport
-      parentRoute: typeof rootRoute
+    '/_client/clientPage/myCart': {
+      id: '/_client/clientPage/myCart'
+      path: '/myCart'
+      fullPath: '/clientPage/myCart'
+      preLoaderRoute: typeof ClientClientPageMyCartImport
+      parentRoute: typeof ClientClientPageImport
+    }
+    '/_client/clientPage/myOrders': {
+      id: '/_client/clientPage/myOrders'
+      path: '/myOrders'
+      fullPath: '/clientPage/myOrders'
+      preLoaderRoute: typeof ClientClientPageMyOrdersImport
+      parentRoute: typeof ClientClientPageImport
+    }
+    '/_client/clientPage/products': {
+      id: '/_client/clientPage/products'
+      path: '/products'
+      fullPath: '/clientPage/products'
+      preLoaderRoute: typeof ClientClientPageProductsImport
+      parentRoute: typeof ClientClientPageImport
+    }
+    '/layouts/visibleLayout/bar': {
+      id: '/layouts/visibleLayout/bar'
+      path: '/bar'
+      fullPath: '/layouts/visibleLayout/bar'
+      preLoaderRoute: typeof LayoutsVisibleLayoutBarImport
+      parentRoute: typeof LayoutsVisibleLayoutImport
+    }
+    '/layouts/visibleLayout/foo': {
+      id: '/layouts/visibleLayout/foo'
+      path: '/foo'
+      fullPath: '/layouts/visibleLayout/foo'
+      preLoaderRoute: typeof LayoutsVisibleLayoutFooImport
+      parentRoute: typeof LayoutsVisibleLayoutImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface ClientClientPageRouteChildren {
+  ClientClientPageMyCartRoute: typeof ClientClientPageMyCartRoute
+  ClientClientPageMyOrdersRoute: typeof ClientClientPageMyOrdersRoute
+  ClientClientPageProductsRoute: typeof ClientClientPageProductsRoute
+}
+
+const ClientClientPageRouteChildren: ClientClientPageRouteChildren = {
+  ClientClientPageMyCartRoute: ClientClientPageMyCartRoute,
+  ClientClientPageMyOrdersRoute: ClientClientPageMyOrdersRoute,
+  ClientClientPageProductsRoute: ClientClientPageProductsRoute,
+}
+
+const ClientClientPageRouteWithChildren =
+  ClientClientPageRoute._addFileChildren(ClientClientPageRouteChildren)
+
+interface LayoutsVisibleLayoutRouteChildren {
+  LayoutsVisibleLayoutBarRoute: typeof LayoutsVisibleLayoutBarRoute
+  LayoutsVisibleLayoutFooRoute: typeof LayoutsVisibleLayoutFooRoute
+}
+
+const LayoutsVisibleLayoutRouteChildren: LayoutsVisibleLayoutRouteChildren = {
+  LayoutsVisibleLayoutBarRoute: LayoutsVisibleLayoutBarRoute,
+  LayoutsVisibleLayoutFooRoute: LayoutsVisibleLayoutFooRoute,
+}
+
+const LayoutsVisibleLayoutRouteWithChildren =
+  LayoutsVisibleLayoutRoute._addFileChildren(LayoutsVisibleLayoutRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
-  '/clientUser/UserButtonContainer': typeof ClientUserUserButtonContainerRoute
+  '/clientPage': typeof ClientClientPageRouteWithChildren
+  '/layouts/visibleLayout': typeof LayoutsVisibleLayoutRouteWithChildren
   '/adminUser': typeof AdminUserIndexRoute
-  '/clientUser': typeof ClientUserIndexRoute
   '/workerUser': typeof WorkerUserIndexRoute
-  '/clientUser/orders': typeof ClientUserOrdersIndexRoute
+  '/clientPage/myCart': typeof ClientClientPageMyCartRoute
+  '/clientPage/myOrders': typeof ClientClientPageMyOrdersRoute
+  '/clientPage/products': typeof ClientClientPageProductsRoute
+  '/layouts/visibleLayout/bar': typeof LayoutsVisibleLayoutBarRoute
+  '/layouts/visibleLayout/foo': typeof LayoutsVisibleLayoutFooRoute
 }
 
 export interface FileRoutesByTo {
@@ -167,11 +254,15 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
-  '/clientUser/UserButtonContainer': typeof ClientUserUserButtonContainerRoute
+  '/clientPage': typeof ClientClientPageRouteWithChildren
+  '/layouts/visibleLayout': typeof LayoutsVisibleLayoutRouteWithChildren
   '/adminUser': typeof AdminUserIndexRoute
-  '/clientUser': typeof ClientUserIndexRoute
   '/workerUser': typeof WorkerUserIndexRoute
-  '/clientUser/orders': typeof ClientUserOrdersIndexRoute
+  '/clientPage/myCart': typeof ClientClientPageMyCartRoute
+  '/clientPage/myOrders': typeof ClientClientPageMyOrdersRoute
+  '/clientPage/products': typeof ClientClientPageProductsRoute
+  '/layouts/visibleLayout/bar': typeof LayoutsVisibleLayoutBarRoute
+  '/layouts/visibleLayout/foo': typeof LayoutsVisibleLayoutFooRoute
 }
 
 export interface FileRoutesById {
@@ -180,11 +271,15 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
-  '/clientUser/UserButtonContainer': typeof ClientUserUserButtonContainerRoute
+  '/_client/clientPage': typeof ClientClientPageRouteWithChildren
+  '/layouts/visibleLayout': typeof LayoutsVisibleLayoutRouteWithChildren
   '/adminUser/': typeof AdminUserIndexRoute
-  '/clientUser/': typeof ClientUserIndexRoute
   '/workerUser/': typeof WorkerUserIndexRoute
-  '/clientUser/orders/': typeof ClientUserOrdersIndexRoute
+  '/_client/clientPage/myCart': typeof ClientClientPageMyCartRoute
+  '/_client/clientPage/myOrders': typeof ClientClientPageMyOrdersRoute
+  '/_client/clientPage/products': typeof ClientClientPageProductsRoute
+  '/layouts/visibleLayout/bar': typeof LayoutsVisibleLayoutBarRoute
+  '/layouts/visibleLayout/foo': typeof LayoutsVisibleLayoutFooRoute
 }
 
 export interface FileRouteTypes {
@@ -194,33 +289,45 @@ export interface FileRouteTypes {
     | '/about'
     | '/login'
     | '/register'
-    | '/clientUser/UserButtonContainer'
+    | '/clientPage'
+    | '/layouts/visibleLayout'
     | '/adminUser'
-    | '/clientUser'
     | '/workerUser'
-    | '/clientUser/orders'
+    | '/clientPage/myCart'
+    | '/clientPage/myOrders'
+    | '/clientPage/products'
+    | '/layouts/visibleLayout/bar'
+    | '/layouts/visibleLayout/foo'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/login'
     | '/register'
-    | '/clientUser/UserButtonContainer'
+    | '/clientPage'
+    | '/layouts/visibleLayout'
     | '/adminUser'
-    | '/clientUser'
     | '/workerUser'
-    | '/clientUser/orders'
+    | '/clientPage/myCart'
+    | '/clientPage/myOrders'
+    | '/clientPage/products'
+    | '/layouts/visibleLayout/bar'
+    | '/layouts/visibleLayout/foo'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/login'
     | '/register'
-    | '/clientUser/UserButtonContainer'
+    | '/_client/clientPage'
+    | '/layouts/visibleLayout'
     | '/adminUser/'
-    | '/clientUser/'
     | '/workerUser/'
-    | '/clientUser/orders/'
+    | '/_client/clientPage/myCart'
+    | '/_client/clientPage/myOrders'
+    | '/_client/clientPage/products'
+    | '/layouts/visibleLayout/bar'
+    | '/layouts/visibleLayout/foo'
   fileRoutesById: FileRoutesById
 }
 
@@ -229,11 +336,10 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
-  ClientUserUserButtonContainerRoute: typeof ClientUserUserButtonContainerRoute
+  ClientClientPageRoute: typeof ClientClientPageRouteWithChildren
+  LayoutsVisibleLayoutRoute: typeof LayoutsVisibleLayoutRouteWithChildren
   AdminUserIndexRoute: typeof AdminUserIndexRoute
-  ClientUserIndexRoute: typeof ClientUserIndexRoute
   WorkerUserIndexRoute: typeof WorkerUserIndexRoute
-  ClientUserOrdersIndexRoute: typeof ClientUserOrdersIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -241,11 +347,10 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
-  ClientUserUserButtonContainerRoute: ClientUserUserButtonContainerRoute,
+  ClientClientPageRoute: ClientClientPageRouteWithChildren,
+  LayoutsVisibleLayoutRoute: LayoutsVisibleLayoutRouteWithChildren,
   AdminUserIndexRoute: AdminUserIndexRoute,
-  ClientUserIndexRoute: ClientUserIndexRoute,
   WorkerUserIndexRoute: WorkerUserIndexRoute,
-  ClientUserOrdersIndexRoute: ClientUserOrdersIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -262,11 +367,10 @@ export const routeTree = rootRoute
         "/about",
         "/login",
         "/register",
-        "/clientUser/UserButtonContainer",
+        "/_client/clientPage",
+        "/layouts/visibleLayout",
         "/adminUser/",
-        "/clientUser/",
-        "/workerUser/",
-        "/clientUser/orders/"
+        "/workerUser/"
       ]
     },
     "/": {
@@ -281,20 +385,46 @@ export const routeTree = rootRoute
     "/register": {
       "filePath": "register.tsx"
     },
-    "/clientUser/UserButtonContainer": {
-      "filePath": "clientUser/UserButtonContainer.jsx"
+    "/_client/clientPage": {
+      "filePath": "_client/clientPage.tsx",
+      "children": [
+        "/_client/clientPage/myCart",
+        "/_client/clientPage/myOrders",
+        "/_client/clientPage/products"
+      ]
+    },
+    "/layouts/visibleLayout": {
+      "filePath": "layouts/visibleLayout.tsx",
+      "children": [
+        "/layouts/visibleLayout/bar",
+        "/layouts/visibleLayout/foo"
+      ]
     },
     "/adminUser/": {
       "filePath": "adminUser/index.jsx"
     },
-    "/clientUser/": {
-      "filePath": "clientUser/index.tsx"
-    },
     "/workerUser/": {
       "filePath": "workerUser/index.jsx"
     },
-    "/clientUser/orders/": {
-      "filePath": "clientUser/orders/index.jsx"
+    "/_client/clientPage/myCart": {
+      "filePath": "_client/clientPage/myCart.tsx",
+      "parent": "/_client/clientPage"
+    },
+    "/_client/clientPage/myOrders": {
+      "filePath": "_client/clientPage/myOrders.tsx",
+      "parent": "/_client/clientPage"
+    },
+    "/_client/clientPage/products": {
+      "filePath": "_client/clientPage/products.tsx",
+      "parent": "/_client/clientPage"
+    },
+    "/layouts/visibleLayout/bar": {
+      "filePath": "layouts/visibleLayout/bar.tsx",
+      "parent": "/layouts/visibleLayout"
+    },
+    "/layouts/visibleLayout/foo": {
+      "filePath": "layouts/visibleLayout/foo.tsx",
+      "parent": "/layouts/visibleLayout"
     }
   }
 }

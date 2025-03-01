@@ -23,7 +23,7 @@ function RootComponent() {
     if (authenticatedUser?.role === "admin") {
       router.navigate({ to: "/adminUser" });
     } else if (authenticatedUser?.role === "client") {
-      router.navigate({ to: "/clientUser" });
+      router.navigate({ to: "/clientPage/products" });
     } else if (authenticatedUser?.role === "worker") {
       router.navigate({ to: "/workerUser" });
     }
