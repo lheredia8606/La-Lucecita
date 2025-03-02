@@ -3,16 +3,20 @@ import { TButtonProps } from "../../utils/ApplicationTypesAndGlobals";
 import { useRouter } from "@tanstack/react-router";
 
 export const CustomButton = ({
-  buttonProps,
   btnText,
   navigateTo,
+  activeButton,
+  setActiveButton,
 }: TButtonProps) => {
   const router = useRouter();
   return (
     <>
       <button
-        {...buttonProps}
+        className={
+          btnText === activeButton ? "custom-btn active" : "custom-btn"
+        }
         onClick={() => {
+          setActiveButton(btnText);
           router.navigate({ to: navigateTo });
         }}
       >

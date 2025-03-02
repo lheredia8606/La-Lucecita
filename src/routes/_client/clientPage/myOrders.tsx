@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { OrderCard } from "../../../Components/OrderCard/OrderCard";
+import { OrderCard } from "../../../Components/Order/OrderCard/OrderCard";
 import { useOrder } from "../../../Providers/OrderProvider";
 import { SpinnerModal } from "../../../Components/SpinnerModal/SpinnerModal";
 import { ErrorModal } from "../../../Components/ErrorModal/ErrorModal";

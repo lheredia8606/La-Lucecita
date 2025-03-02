@@ -71,6 +71,7 @@
       "isActive": "true"
     }
   ],
+
   "products": [
     {
       "id": "asdf",
@@ -105,11 +106,29 @@
       "price": 19.99
     }
   ],
+
   "orders": [
     {
       "id": "01",
       "clientId": "asdasa",
-      "productId": ["asdf", "gfhjfe"],
+      "productQty": [
+        {
+          "productId": "asdf",
+          "quantity": 1
+        },
+        {
+          "productId": "gfhjfe",
+          "quantity": 2
+        },
+        {
+          "productId": "puouoi",
+          "quantity": 5
+        },
+        {
+          "productId": "qazwsd",
+          "quantity": 4
+        }
+      ],
       "workerId": "undefined",
       "deadLine": "undefined",
       "status": "in_cart"
@@ -117,7 +136,20 @@
     {
       "id": "02",
       "clientId": "gfgrty",
-      "productId": ["asdf"],
+      "productQty": [
+        {
+          "productId": "asdf",
+          "quantity": 1
+        },
+        {
+          "productId": "puouoi",
+          "quantity": 5
+        },
+        {
+          "productId": "qazwsd",
+          "quantity": 4
+        }
+      ],
       "workerId": "undefined",
       "deadLine": "YYYY-MM-DDTHH-MM-SSZ",
       "status": "ordered"
@@ -125,7 +157,16 @@
     {
       "id": "03",
       "clientId": "jhyqw",
-      "productId": ["puouoi"],
+      "productQty": [
+        {
+          "productId": "puouoi",
+          "quantity": 5
+        },
+        {
+          "productId": "qazwsd",
+          "quantity": 4
+        }
+      ],
       "workerId": "bnhjhk",
       "deadLine": "YYYY-MM-DDTHH-MM-SSZ",
       "status": "processing"
@@ -133,7 +174,12 @@
     {
       "id": "04",
       "clientId": "asdasa",
-      "productId": ["gfhjfe"],
+      "productQty": [
+        {
+          "productId": "qazwsd",
+          "quantity": 4
+        }
+      ],
       "workerId": "asdgcccqw",
       "deadLine": "YYYY-MM-DDTHH-MM-SSZ",
       "status": "ready"

@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  padding: 20px;
+  padding: 15px;
   justify-content: center;
 }
 
@@ -12,14 +12,17 @@
 }
 
 .order-card {
+  display: flex;
+  flex-direction: column;
   width: 300px;
+  height: 350px;
   background-color: #fff;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   cursor: pointer;
-  padding: 16px;
+  padding: 10px 16px;
 }
 
 .order-card:hover {
@@ -27,19 +30,28 @@
 }
 
 .order-info {
-  margin-bottom: 16px;
+  margin-bottom: 10px;
+}
+
+.order-info-header {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .order-id {
   font-size: 1.5rem;
   font-weight: bold;
   color: #333;
-  margin-bottom: 8px;
 }
 
 .order-status {
   font-size: 1.125rem;
   color: #555;
+}
+
+.status-in-cart {
+  color: crimson;
 }
 
 .status-pending {
@@ -63,28 +75,6 @@
   font-weight: bold;
 }
 
-.order-products {
-  margin-top: 16px;
-}
-
-.products-title {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 8px;
-}
-
-.product-list {
-  list-style-type: none;
-  padding: 0;
-}
-
-.product-item {
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 4px;
-}
-
 .view-order-btn {
   width: 100%;
   padding: 12px;
@@ -96,7 +86,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 16px;
+  margin-top: 14px;
 }
 
 .view-order-btn:hover {

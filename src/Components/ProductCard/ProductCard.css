@@ -7,12 +7,12 @@
 }
 
 .card-container .product-card {
-  flex: 1 1 250px;
+  flex-grow: 1;
   max-width: 300px;
+  max-height: 345px;
 }
 
 .product-card {
-  width: 300px;
   border-radius: 10px;
   overflow: hidden;
   background-color: #ffffff;

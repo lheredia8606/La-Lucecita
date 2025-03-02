@@ -29,17 +29,22 @@ export type TProduct = {
   price: number;
 };
 
+export type TOrderProductQty = {
+  productId: string;
+  quantity: number;
+};
 export type TOrder = {
   id: string;
   clientId: string;
-  productId: string[];
+  productQty: TOrderProductQty[];
   workerId: string | undefined;
   deadLine: Temporal.Instant;
   status: "in_cart" | "ordered" | "processing" | "ready" | "done";
 };
 
 export type TButtonProps = {
-  buttonProps: ButtonHTMLAttributes<HTMLButtonElement>;
   btnText: string;
   navigateTo: string;
+  activeButton: string;
+  setActiveButton: (activeButton: string) => void;
 };
