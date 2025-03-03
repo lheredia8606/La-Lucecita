@@ -89,6 +89,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     updateUserMutation.mutate({ id, user });
   };
 
+  const isUserEmailUsed = (email: string): boolean => {
+    return !!allUsers.find(
+      (user) => user.email.toLowerCase() === email.toLowerCase()
+    );
+  };
+
   useEffect(() => {
     if (allUsersData) {
       setAllUsers(allUsersData);

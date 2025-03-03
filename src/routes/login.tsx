@@ -39,7 +39,7 @@ function RouteComponent() {
       } else if (user.role === "worker") {
         toRoute = "/workerUser";
       } else {
-        toRoute = "/clientPage";
+        toRoute = "/clientPage/products";
       }
       setAuthenticatedUser(user);
       router.navigate({ to: toRoute });

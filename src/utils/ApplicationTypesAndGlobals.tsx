@@ -7,11 +7,12 @@ const baseUrl = "http://localhost:3000/";
 export const apiUser = apiHandler<TUser>(baseUrl, "users");
 export const apiProducts = apiHandler<TProduct>(baseUrl, "products");
 export const apiOrders = apiHandler<TOrder>(baseUrl, "orders");
+export const phoneInputMaxLength = [3, 3, 4];
 
 //types
 export type TUser = {
   id: string;
-  name: string;
+  firstName: string;
   lastName: string;
   email: string;
   password: string;

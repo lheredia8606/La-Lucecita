@@ -42,6 +42,34 @@
   box-sizing: border-box;
 }
 
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(10px);
+  }
+}
+
+.input-group input.red-border {
+  animation: shake 0.3s ease-in-out;
+  border: 1px solid red;
+}
+
+.input-group input.red-border:focus {
+  outline: none;
+  border: 1px solid red;
+}
+
 .phone-group {
   display: flex;
   gap: 5px;

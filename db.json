@@ -2,7 +2,7 @@
   "users": [
     {
       "id": "asdasa",
-      "name": "Alice",
+      "firstName": "Alice",
       "lastName": "Thompson",
       "email": "client@gmail.com",
       "password": "a",
@@ -12,7 +12,7 @@
     },
     {
       "id": "gfgrty",
-      "name": "Bob",
+      "firstName": "Bob",
       "lastName": "Martinez",
       "email": "bbmartinez@gmail.com",
       "password": "a",
@@ -22,7 +22,7 @@
     },
     {
       "id": "jhyqw",
-      "name": "Sophia",
+      "firstName": "Sophia",
       "lastName": "Reynolds",
       "email": "sreynolds@gmail.com",
       "password": "a",
@@ -32,7 +32,7 @@
     },
     {
       "id": "bnhjhk",
-      "name": "James",
+      "firstName": "James",
       "lastName": "Carter",
       "email": "worker@gmail.com",
       "password": "a",
@@ -42,7 +42,7 @@
     },
     {
       "id": "asdgcccqw",
-      "name": "Emma",
+      "firstName": "Emma",
       "lastName": "Sinclair",
       "email": "eSinclair@gmail.com",
       "password": "a",
@@ -52,7 +52,7 @@
     },
     {
       "id": "iudfxwa",
-      "name": "Emma",
+      "firstName": "Emma",
       "lastName": "Smith",
       "email": "eSmith@gmail.com",
       "password": "a",
@@ -62,7 +62,7 @@
     },
     {
       "id": "asdbzli",
-      "name": "Admin",
+      "firstName": "Admin",
       "lastName": "Jhonson",
       "email": "admin@gmail.com",
       "password": "a",

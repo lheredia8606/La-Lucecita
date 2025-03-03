@@ -69,7 +69,13 @@ function RootComponent() {
             </li>
             {authenticatedUser ? (
               <li>
-                <a href="#" onClick={() => setAuthenticatedUser(null)}>
+                <a
+                  href="#"
+                  onClick={() => {
+                    localStorage.removeItem("authenticatedUser");
+                    setAuthenticatedUser(null);
+                  }}
+                >
                   Log out
                 </a>
               </li>
