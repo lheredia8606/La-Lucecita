@@ -48,7 +48,7 @@
   color: #888888;
 }
 
-.add-to-cart-btn {
+.product-card button {
   width: 100%;
   padding: 12px;
   background-color: #007bff;
@@ -61,11 +61,18 @@
   transition: background-color 0.3s ease;
 }
 
+.product-card button.remove {
+  background-color: #dc3545;
+}
+.product-card button.remove:hover {
+  background-color: #a71d2a;
+}
+
 .add-to-cart-btn:hover {
   background-color: #0056b3;
 }
 
-.add-to-cart-btn:focus {
+.product-card button:focus {
   outline: none;
 }
 

@@ -39,7 +39,7 @@ export type TOrder = {
   clientId: string;
   productQty: TOrderProductQty[];
   workerId: string | undefined;
-  deadLine: Temporal.Instant;
+  deadLine: Temporal.Instant | null;
   status: "in_cart" | "ordered" | "processing" | "ready" | "done";
 };
 

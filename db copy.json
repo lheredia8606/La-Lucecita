@@ -223,20 +223,6 @@
       "workerId": "asdgcccqw",
       "deadLine": "YYYY-MM-DDTHH-MM-SSZ",
       "status": "ready"
-    },
-    {
-      "id": "ce92",
-      "clientId": "3ad3",
-      "deadLine": null,
-      "productQty": [],
-      "status": "in_cart"
-    },
-    {
-      "id": "2612",
-      "clientId": "gfgrty",
-      "deadLine": null,
-      "productQty": [],
-      "status": "in_cart"
     }
   ]
 }

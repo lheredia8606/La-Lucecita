@@ -5,12 +5,18 @@ type TProductCardProps = {
   product: TProduct;
   setIsModalOpen: (isOpen: boolean) => void;
   setModalImage: (image: string) => void;
+  buttonClass: string;
+  buttonValue: string;
+  onBtnClickAction: (id: string) => void;
 };
 
 export const ProductCard = ({
   setIsModalOpen,
   product,
   setModalImage,
+  buttonClass,
+  buttonValue,
+  onBtnClickAction,
 }: TProductCardProps) => {
   const { image, price, type } = product;
   const handleImageClick = () => {
@@ -31,8 +37,15 @@ export const ProductCard = ({
           <h2 className="product-name">{type}</h2>
           <p className="product-price">${price.toFixed(2)}</p>
         </div>
-        <button className="add-to-cart-btn">Add to Cart</button>
+        <button
+          className={buttonClass}
+          onClick={() => onBtnClickAction(product.id)}
+        >
+          {buttonValue}
+        </button>
       </div>
     </>
   );
 };
+//"add-to-cart-btn"
+//Add to Cart
