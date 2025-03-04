@@ -5,12 +5,14 @@ import { CustomRegularInputsGroup } from "../Components/RegisterModalPage/Regula
 import { isUserValid } from "../utils/Validations/User/UserValidation";
 import { TUser } from "../utils/ApplicationTypesAndGlobals";
 import { PhoneInputGroup } from "../Components/RegisterModalPage/PhoneInputs/PhoneInputGroup";
+import { useUser } from "../Providers/UserProvider";
 
 export const Route = createFileRoute("/register")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { addUserMutation } = useUser();
   const router = useRouter();
   const [firstNameInput, setFirstNameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
@@ -35,8 +37,11 @@ function RouteComponent() {
       phone: phoneInput,
       role: roleInput as "client" | "worker" | "admin",
     };
+
     if (isUserValid(user)) {
       console.log("submitting");
+      addUserMutation.mutate(user);
+      router.navigate({ to: "/login" });
     }
     setWasTriedToSubmit(true);
   };

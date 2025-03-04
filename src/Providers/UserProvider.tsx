@@ -1,7 +1,12 @@
 import { ReactNode, useRouter } from "@tanstack/react-router";
 import { createContext, useContext, useEffect, useState } from "react";
 import { apiUser, TUser } from "../utils/ApplicationTypesAndGlobals";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 type TUserContextProps = {
   allUsers: TUser[] | undefined;
@@ -11,6 +16,7 @@ type TUserContextProps = {
   authenticatedUser: TUser | null;
   authenticate: (email: string, password: string) => void;
   setAuthenticatedUser: (user: TUser | null) => void;
+  addUserMutation: UseMutationResult<TUser, Error, Omit<TUser, "id">, unknown>;
 };
 
 type TUpdateMutationParams = {
@@ -42,6 +48,15 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const { data: allUsersData, isLoading: isLoadingUsers } = useQuery({
     queryKey: ["fetchAllUsers"],
     queryFn: () => apiUser.getAll(),
+  });
+
+  const addUserMutation = useMutation({
+    mutationFn: (user: Omit<TUser, "id">) => apiUser.post(user),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["fetchAllUsers"] }),
+    onError: () => {
+      console.log("Need to handle adUser in register, there was an error");
+    },
   });
 
   const createUserMutation = useMutation({
@@ -112,6 +127,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           authenticatedUser,
           authenticate,
           setAuthenticatedUser,
+          addUserMutation,
         }}
       >
         {children}
