@@ -27,16 +27,16 @@ const rootElement = document.getElementById("app")!;
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
-    // <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <UserProvider>
-        <ProductProvider>
-          <OrderProvider>
-            <RouterProvider router={router} />
-          </OrderProvider>
-        </ProductProvider>
-      </UserProvider>
-    </QueryClientProvider>
-    // </StrictMode>
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <UserProvider>
+          <ProductProvider>
+            <OrderProvider>
+              <RouterProvider router={router} />
+            </OrderProvider>
+          </ProductProvider>
+        </UserProvider>
+      </QueryClientProvider>
+    </StrictMode>
   );
 }

@@ -3,35 +3,63 @@ import { useProducts } from "../../../Providers/ProductProvider";
 import { ProductCard } from "../../../Components/ProductCard/ProductCard";
 import { useState } from "react";
 import { useOrder } from "../../../Providers/OrderProvider";
+import { QtyHandle } from "../../../Components/ProductCard/QtyHandle";
 
 export const Route = createFileRoute("/_client/clientPage/myCart")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { removeProductFromCar } = useOrder();
-  const { allProducts } = useProducts();
+  const {
+    removeProductFromCart,
+    getCurrentUserCartProducts: getCurrentUserCartProducts,
+  } = useOrder();
+  const { getProductById } = useProducts();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState("");
   const handleCloseModal = () => {
-    setIsModalOpen(false); // Close modal
+    setIsModalOpen(false);
   };
+
   return (
     <>
       <div className="card-container">
-        {allProducts.map((product) => {
+        {getCurrentUserCartProducts().map(({ productId, quantity }) => {
+          const product = getProductById(productId);
+          console.log(product);
+          if (!product) {
+            return <></>;
+          }
           return (
-            <ProductCard
-              product={product}
-              key={product.id}
-              setIsModalOpen={setIsModalOpen}
-              setModalImage={setModalImage}
-              buttonClass="remove"
-              buttonValue="Remove"
-              onBtnClickAction={removeProductFromCar}
-            />
+            <div className="product-card-wrapper" key={product.id}>
+              <ProductCard
+                product={product}
+                setIsModalOpen={setIsModalOpen}
+                setModalImage={setModalImage}
+                buttonClass="remove"
+                buttonValue="Remove"
+                onBtnClickAction={() => removeProductFromCart(productId)}
+              />
+              <QtyHandle />
+            </div>
           );
         })}
+
+        {/* {allProducts.map((product) => {
+          return (
+            <div className="product-card-wrapper" key={product.id}>
+              <ProductCard
+                product={product}
+                setIsModalOpen={setIsModalOpen}
+                setModalImage={setModalImage}
+                buttonClass="remove"
+                buttonValue="Remove"
+                onBtnClickAction={() => removeProductFromCart(product.id)}
+              />
+              <QtyHandle />
+            </div>
+          );
+        })} */}
       </div>
       {isModalOpen && (
         <div className="modal-overlay" onClick={handleCloseModal}>

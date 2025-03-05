@@ -22,8 +22,8 @@ function RouteComponent() {
         {allProducts.map((product) => {
           return (
             <ProductCard
-              product={product}
               key={product.id}
+              product={product}
               setIsModalOpen={setIsModalOpen}
               setModalImage={setModalImage}
               buttonClass="add-to-cart-btn"

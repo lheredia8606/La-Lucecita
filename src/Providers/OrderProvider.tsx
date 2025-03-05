@@ -1,6 +1,10 @@
 import { ReactNode, useSearch } from "@tanstack/react-router";
 import { createContext, useContext, useEffect, useState } from "react";
-import { apiOrders, TOrder } from "../utils/ApplicationTypesAndGlobals";
+import {
+  apiOrders,
+  TOrder,
+  TOrderProductQty,
+} from "../utils/ApplicationTypesAndGlobals";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useUser } from "./UserProvider";
 
@@ -10,8 +14,11 @@ type TOrderContextProps = {
   isAllOrdersFetchError: boolean;
   allOrdersFetchError: Error | null;
   isLoadingFetchAllOrders: boolean;
-  addProductToCar: (productId: string) => void;
-  removeProductFromCar: (productId: string) => void;
+  addProductToCart: (productId: string) => void;
+  removeProductFromCart: (productId: string) => void;
+  getUserOrders: (userId: string | null) => TOrder[];
+  authenticatedUserCart: TOrder | undefined;
+  getCurrentUserCartProducts: () => TOrderProductQty[];
 };
 const OrderContext = createContext<TOrderContextProps>(
   {} as TOrderContextProps
@@ -19,6 +26,8 @@ const OrderContext = createContext<TOrderContextProps>(
 
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
+  const [authenticatedUserCartOrders, setAuthenticatedUserCartOrders] =
+    useState<TOrderProductQty[]>([]);
   const { authenticatedUser } = useUser();
   const [allOrders, setAllOrders] = useState<TOrder[]>([]);
   let authenticatedUserCart: TOrder | undefined = undefined;
@@ -71,6 +80,22 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     return undefined;
   };
 
+  const getUserOrders = (userId: string | null) => {
+    if (userId) {
+      return allOrders?.filter((order) => {
+        return order.clientId === authenticatedUser?.id;
+      });
+    }
+    return [];
+  };
+
+  const getCurrentUserCartProducts = (): TOrderProductQty[] => {
+    if (authenticatedUserCart) {
+      return authenticatedUserCart.productQty;
+    }
+    return [];
+  };
+
   useEffect(() => {
     if (fetchedOrders) {
       setAllOrders(fetchedOrders);
@@ -82,12 +107,10 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     authenticatedUserCart = getUserCartOnAuth();
   }, [authenticatedUser]);
 
-  useEffect(() => console.log("runned usefect"), []);
-
-  const addProductToCar = (productId: string) => {
+  const addProductToCart = (productId: string) => {
     console.log("addingProduct");
   };
-  const removeProductFromCar = (productId: string) => {
+  const removeProductFromCart = (productId: string) => {
     console.log("removing");
   };
   return (
@@ -98,8 +121,11 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
         allOrdersFetchError,
         isAllOrdersFetchError,
         isLoadingFetchAllOrders,
-        addProductToCar,
-        removeProductFromCar,
+        addProductToCart,
+        removeProductFromCart,
+        getUserOrders,
+        authenticatedUserCart,
+        getCurrentUserCartProducts,
       }}
     >
       {children}
