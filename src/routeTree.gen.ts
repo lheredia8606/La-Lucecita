@@ -17,10 +17,7 @@ import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as WorkerUserIndexImport } from './routes/workerUser/index'
 import { Route as AdminUserIndexImport } from './routes/adminUser/index'
-import { Route as LayoutsVisibleLayoutImport } from './routes/layouts/visibleLayout'
 import { Route as ClientClientPageImport } from './routes/_client/clientPage'
-import { Route as LayoutsVisibleLayoutFooImport } from './routes/layouts/visibleLayout/foo'
-import { Route as LayoutsVisibleLayoutBarImport } from './routes/layouts/visibleLayout/bar'
 import { Route as ClientClientPageProductsImport } from './routes/_client/clientPage/products'
 import { Route as ClientClientPageMyOrdersImport } from './routes/_client/clientPage/myOrders'
 import { Route as ClientClientPageMyCartImport } from './routes/_client/clientPage/myCart'
@@ -63,28 +60,10 @@ const AdminUserIndexRoute = AdminUserIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const LayoutsVisibleLayoutRoute = LayoutsVisibleLayoutImport.update({
-  id: '/layouts/visibleLayout',
-  path: '/layouts/visibleLayout',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const ClientClientPageRoute = ClientClientPageImport.update({
   id: '/_client/clientPage',
   path: '/clientPage',
   getParentRoute: () => rootRoute,
-} as any)
-
-const LayoutsVisibleLayoutFooRoute = LayoutsVisibleLayoutFooImport.update({
-  id: '/foo',
-  path: '/foo',
-  getParentRoute: () => LayoutsVisibleLayoutRoute,
-} as any)
-
-const LayoutsVisibleLayoutBarRoute = LayoutsVisibleLayoutBarImport.update({
-  id: '/bar',
-  path: '/bar',
-  getParentRoute: () => LayoutsVisibleLayoutRoute,
 } as any)
 
 const ClientClientPageProductsRoute = ClientClientPageProductsImport.update({
@@ -144,13 +123,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientClientPageImport
       parentRoute: typeof rootRoute
     }
-    '/layouts/visibleLayout': {
-      id: '/layouts/visibleLayout'
-      path: '/layouts/visibleLayout'
-      fullPath: '/layouts/visibleLayout'
-      preLoaderRoute: typeof LayoutsVisibleLayoutImport
-      parentRoute: typeof rootRoute
-    }
     '/adminUser/': {
       id: '/adminUser/'
       path: '/adminUser'
@@ -186,20 +158,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientClientPageProductsImport
       parentRoute: typeof ClientClientPageImport
     }
-    '/layouts/visibleLayout/bar': {
-      id: '/layouts/visibleLayout/bar'
-      path: '/bar'
-      fullPath: '/layouts/visibleLayout/bar'
-      preLoaderRoute: typeof LayoutsVisibleLayoutBarImport
-      parentRoute: typeof LayoutsVisibleLayoutImport
-    }
-    '/layouts/visibleLayout/foo': {
-      id: '/layouts/visibleLayout/foo'
-      path: '/foo'
-      fullPath: '/layouts/visibleLayout/foo'
-      preLoaderRoute: typeof LayoutsVisibleLayoutFooImport
-      parentRoute: typeof LayoutsVisibleLayoutImport
-    }
   }
 }
 
@@ -220,33 +178,17 @@ const ClientClientPageRouteChildren: ClientClientPageRouteChildren = {
 const ClientClientPageRouteWithChildren =
   ClientClientPageRoute._addFileChildren(ClientClientPageRouteChildren)
 
-interface LayoutsVisibleLayoutRouteChildren {
-  LayoutsVisibleLayoutBarRoute: typeof LayoutsVisibleLayoutBarRoute
-  LayoutsVisibleLayoutFooRoute: typeof LayoutsVisibleLayoutFooRoute
-}
-
-const LayoutsVisibleLayoutRouteChildren: LayoutsVisibleLayoutRouteChildren = {
-  LayoutsVisibleLayoutBarRoute: LayoutsVisibleLayoutBarRoute,
-  LayoutsVisibleLayoutFooRoute: LayoutsVisibleLayoutFooRoute,
-}
-
-const LayoutsVisibleLayoutRouteWithChildren =
-  LayoutsVisibleLayoutRoute._addFileChildren(LayoutsVisibleLayoutRouteChildren)
-
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/clientPage': typeof ClientClientPageRouteWithChildren
-  '/layouts/visibleLayout': typeof LayoutsVisibleLayoutRouteWithChildren
   '/adminUser': typeof AdminUserIndexRoute
   '/workerUser': typeof WorkerUserIndexRoute
   '/clientPage/myCart': typeof ClientClientPageMyCartRoute
   '/clientPage/myOrders': typeof ClientClientPageMyOrdersRoute
   '/clientPage/products': typeof ClientClientPageProductsRoute
-  '/layouts/visibleLayout/bar': typeof LayoutsVisibleLayoutBarRoute
-  '/layouts/visibleLayout/foo': typeof LayoutsVisibleLayoutFooRoute
 }
 
 export interface FileRoutesByTo {
@@ -255,14 +197,11 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/clientPage': typeof ClientClientPageRouteWithChildren
-  '/layouts/visibleLayout': typeof LayoutsVisibleLayoutRouteWithChildren
   '/adminUser': typeof AdminUserIndexRoute
   '/workerUser': typeof WorkerUserIndexRoute
   '/clientPage/myCart': typeof ClientClientPageMyCartRoute
   '/clientPage/myOrders': typeof ClientClientPageMyOrdersRoute
   '/clientPage/products': typeof ClientClientPageProductsRoute
-  '/layouts/visibleLayout/bar': typeof LayoutsVisibleLayoutBarRoute
-  '/layouts/visibleLayout/foo': typeof LayoutsVisibleLayoutFooRoute
 }
 
 export interface FileRoutesById {
@@ -272,14 +211,11 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/_client/clientPage': typeof ClientClientPageRouteWithChildren
-  '/layouts/visibleLayout': typeof LayoutsVisibleLayoutRouteWithChildren
   '/adminUser/': typeof AdminUserIndexRoute
   '/workerUser/': typeof WorkerUserIndexRoute
   '/_client/clientPage/myCart': typeof ClientClientPageMyCartRoute
   '/_client/clientPage/myOrders': typeof ClientClientPageMyOrdersRoute
   '/_client/clientPage/products': typeof ClientClientPageProductsRoute
-  '/layouts/visibleLayout/bar': typeof LayoutsVisibleLayoutBarRoute
-  '/layouts/visibleLayout/foo': typeof LayoutsVisibleLayoutFooRoute
 }
 
 export interface FileRouteTypes {
@@ -290,14 +226,11 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/clientPage'
-    | '/layouts/visibleLayout'
     | '/adminUser'
     | '/workerUser'
     | '/clientPage/myCart'
     | '/clientPage/myOrders'
     | '/clientPage/products'
-    | '/layouts/visibleLayout/bar'
-    | '/layouts/visibleLayout/foo'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -305,14 +238,11 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/clientPage'
-    | '/layouts/visibleLayout'
     | '/adminUser'
     | '/workerUser'
     | '/clientPage/myCart'
     | '/clientPage/myOrders'
     | '/clientPage/products'
-    | '/layouts/visibleLayout/bar'
-    | '/layouts/visibleLayout/foo'
   id:
     | '__root__'
     | '/'
@@ -320,14 +250,11 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/_client/clientPage'
-    | '/layouts/visibleLayout'
     | '/adminUser/'
     | '/workerUser/'
     | '/_client/clientPage/myCart'
     | '/_client/clientPage/myOrders'
     | '/_client/clientPage/products'
-    | '/layouts/visibleLayout/bar'
-    | '/layouts/visibleLayout/foo'
   fileRoutesById: FileRoutesById
 }
 
@@ -337,7 +264,6 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   ClientClientPageRoute: typeof ClientClientPageRouteWithChildren
-  LayoutsVisibleLayoutRoute: typeof LayoutsVisibleLayoutRouteWithChildren
   AdminUserIndexRoute: typeof AdminUserIndexRoute
   WorkerUserIndexRoute: typeof WorkerUserIndexRoute
 }
@@ -348,7 +274,6 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   ClientClientPageRoute: ClientClientPageRouteWithChildren,
-  LayoutsVisibleLayoutRoute: LayoutsVisibleLayoutRouteWithChildren,
   AdminUserIndexRoute: AdminUserIndexRoute,
   WorkerUserIndexRoute: WorkerUserIndexRoute,
 }
@@ -368,7 +293,6 @@ export const routeTree = rootRoute
         "/login",
         "/register",
         "/_client/clientPage",
-        "/layouts/visibleLayout",
         "/adminUser/",
         "/workerUser/"
       ]
@@ -393,13 +317,6 @@ export const routeTree = rootRoute
         "/_client/clientPage/products"
       ]
     },
-    "/layouts/visibleLayout": {
-      "filePath": "layouts/visibleLayout.tsx",
-      "children": [
-        "/layouts/visibleLayout/bar",
-        "/layouts/visibleLayout/foo"
-      ]
-    },
     "/adminUser/": {
       "filePath": "adminUser/index.jsx"
     },
@@ -417,14 +334,6 @@ export const routeTree = rootRoute
     "/_client/clientPage/products": {
       "filePath": "_client/clientPage/products.tsx",
       "parent": "/_client/clientPage"
-    },
-    "/layouts/visibleLayout/bar": {
-      "filePath": "layouts/visibleLayout/bar.tsx",
-      "parent": "/layouts/visibleLayout"
-    },
-    "/layouts/visibleLayout/foo": {
-      "filePath": "layouts/visibleLayout/foo.tsx",
-      "parent": "/layouts/visibleLayout"
     }
   }
 }
