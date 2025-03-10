@@ -151,7 +151,12 @@
     {
       "id": "01",
       "clientId": "asdasa",
-      "productQty": [],
+      "productQty": [
+        {
+          "productId": "asdf",
+          "quantity": 1
+        }
+      ],
       "workerId": "undefined",
       "deadLine": "undefined",
       "status": "in_cart"

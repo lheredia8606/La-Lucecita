@@ -19,10 +19,9 @@ function RouteComponent() {
   return (
     <>
       <UserProductBtnContainer />
-      <div className="user-container">
-        <div className="content-container">
-          <Outlet />
-        </div>
+
+      <div className="content-container">
+        <Outlet />
       </div>
     </>
   );

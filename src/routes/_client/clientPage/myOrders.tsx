@@ -37,6 +37,7 @@ function RouteComponent() {
   }
   return (
     <>
+      <div className="user-container"></div>
       {currentUserOrders.length === 0 ? (
         <div>
           <h2>Create a Order to see it here!</h2>

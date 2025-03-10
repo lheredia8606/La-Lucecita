@@ -1,6 +1,6 @@
 import {
-  Children,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -22,11 +22,14 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     queryFn: () => apiProducts.getAll(),
   });
 
-  const getProductById = (id: string): TProduct | undefined => {
-    return allProducts.find((product) => {
-      return product.id === id;
-    });
-  };
+  const getProductById = useCallback(
+    (id: string): TProduct | undefined => {
+      return allProducts.find((product) => {
+        return product.id === id;
+      });
+    },
+    [allProducts]
+  );
 
   useEffect(() => {
     if (fetchedProducts) {

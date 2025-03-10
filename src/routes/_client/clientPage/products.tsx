@@ -12,7 +12,7 @@ function RouteComponent() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState("");
   const { allProducts } = useProducts();
-  const { addProductToCar } = useOrder();
+  const { addProductToOrder: addProductToCart } = useOrder();
   const handleCloseModal = () => {
     setIsModalOpen(false); // Close modal
   };
@@ -28,7 +28,9 @@ function RouteComponent() {
               setModalImage={setModalImage}
               buttonClass="add-to-cart-btn"
               buttonValue="Add to Cart"
-              onBtnClickAction={addProductToCar}
+              onBtnClickAction={() => {
+                addProductToCart(product.id);
+              }}
             />
           );
         })}

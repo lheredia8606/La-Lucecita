@@ -14,11 +14,14 @@ type TOrderContextProps = {
   isAllOrdersFetchError: boolean;
   allOrdersFetchError: Error | null;
   isLoadingFetchAllOrders: boolean;
-  addProductToCart: (productId: string) => void;
   getUserOrders: (userId: string | null) => TOrder[];
-  authenticatedUserCart: TOrder | undefined;
-  //getCurrentUserCartProducts: () => TOrderProductQty[];
   removeProductFromOrder: (orderId: string, productId: string) => void;
+  addProductToOrder: (productId: string, orderId?: string) => void;
+  changeProductQtyInOrder: (
+    orderId: string,
+    productId: string,
+    qty: number
+  ) => void;
 };
 const OrderContext = createContext<TOrderContextProps>(
   {} as TOrderContextProps
@@ -28,9 +31,7 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
   const { authenticatedUser } = useUser();
   const [allOrders, setAllOrders] = useState<TOrder[]>([]);
-  const [authenticatedUserCart, setAuthenticatedUserCart] = useState<
-    TOrder | undefined
-  >(undefined);
+
   const {
     data: fetchedOrders,
     isError: isAllOrdersFetchError,
@@ -59,28 +60,14 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
       queryClient.invalidateQueries({ queryKey: ["getAllOrders"] }),
   });
 
-  const refreshUserCart = () => {
-    if (authenticatedUser) {
-      setAuthenticatedUserCart(
-        allOrders.find((order) => {
-          return (
-            order.clientId === authenticatedUser.id &&
-            order.status === "in_cart"
-          );
-        })
-      );
-    }
-  };
-  const getUserCartOnAuth = (): TOrder | undefined => {
+  const getUserCartOnAuth = () => {
     if (authenticatedUser) {
       const cartOrder = allOrders.find((order) => {
         return (
           order.clientId === authenticatedUser.id && order.status === "in_cart"
         );
       });
-      if (cartOrder) {
-        return cartOrder;
-      } else {
+      if (!cartOrder) {
         const newOrder: Omit<TOrder, "id"> = {
           clientId: authenticatedUser.id,
           deadLine: null,
@@ -91,7 +78,6 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
         addOrderMutation.mutate(newOrder);
       }
     }
-    return undefined;
   };
 
   const getUserOrders = (userId: string | null) => {
@@ -102,13 +88,7 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     }
     return [];
   };
-  /*
-  const getCurrentUserCartProducts = (): TOrderProductQty[] => {
-    if (authenticatedUserCart) {
-      return authenticatedUserCart.productQty;
-    }
-    return [];
-  };*/
+
   const removeProductFromOrder = (orderId: string, productId: string) => {
     const orderProducts = allOrders.find(
       (order) => order.id === orderId
@@ -128,20 +108,75 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     patchOrder.mutate({ orderId, partialOrder });
   };
 
+  const changeProductQtyInOrder = (
+    orderId: string,
+    productId: string,
+    qty: number
+  ) => {
+    let orderProducts = allOrders.find(
+      (order) => order.id === orderId
+    )?.productQty;
+    if (!orderProducts) {
+      throw new Error("No products found!");
+    }
+
+    for (let i = 0; i < orderProducts.length; i++) {
+      if (orderProducts[i].productId === productId) {
+        orderProducts[i].quantity += qty;
+        if (orderProducts[i].quantity < 1) {
+          let newOrderProducts = orderProducts.slice(0, i);
+          newOrderProducts.push(...orderProducts.slice(i + 1));
+          orderProducts = newOrderProducts;
+        }
+      }
+    }
+    const partialOrder: Partial<Omit<TOrder, "id">> = {};
+    partialOrder.productQty = orderProducts;
+    patchOrder.mutate({ orderId, partialOrder });
+  };
+
+  const addProductToOrder = (productId: string, orderId?: string) => {
+    let products: TOrderProductQty[] | undefined = [];
+    if (orderId) {
+      products = allOrders.find((order) => order.id === orderId)?.productQty;
+    } else if (authenticatedUser) {
+      const order = allOrders.find(
+        (order) =>
+          order.clientId === authenticatedUser.id && order.status === "in_cart"
+      );
+      products = order?.productQty;
+      orderId = order?.id;
+    }
+    if (products) {
+      let haveProduct: boolean = false;
+      for (let i = 0; i < products.length; i++) {
+        if (products[i].productId === productId) {
+          products[i].quantity++;
+          haveProduct = true;
+          break;
+        }
+      }
+      if (!haveProduct) {
+        products.push({ productId, quantity: 1 });
+      }
+      if (orderId) {
+        const newOrder: Partial<Omit<TOrder, "id">> = {};
+        newOrder.productQty = products;
+        patchOrder.mutate({ orderId, partialOrder: newOrder });
+      }
+    }
+  };
+
   useEffect(() => {
     if (fetchedOrders) {
       setAllOrders(fetchedOrders);
     }
-    refreshUserCart();
   }, [fetchedOrders]);
 
   useEffect(() => {
-    setAuthenticatedUserCart(getUserCartOnAuth());
+    getUserCartOnAuth();
   }, [authenticatedUser]);
 
-  const addProductToCart = (productId: string) => {
-    console.log("addingProduct");
-  };
   return (
     <OrderContext.Provider
       value={{
@@ -150,11 +185,10 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
         allOrdersFetchError,
         isAllOrdersFetchError,
         isLoadingFetchAllOrders,
-        addProductToCart,
+        addProductToOrder: addProductToOrder,
         getUserOrders,
-        authenticatedUserCart,
-        //getCurrentUserCartProducts,
         removeProductFromOrder,
+        changeProductQtyInOrder,
       }}
     >
       {children}

@@ -1,58 +1,79 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useProducts } from "../../../Providers/ProductProvider";
 import { ProductCard } from "../../../Components/ProductCard/ProductCard";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useOrder } from "../../../Providers/OrderProvider";
-import { QtyHandle } from "../../../Components/ProductCard/QtyHandle";
 import { WarningModal } from "../../../Components/WarningModal/WarningModal";
-import "./client.css";
+import { useUser } from "../../../Providers/UserProvider";
+import {
+  TOrder,
+  TOrderProductQty,
+} from "../../../utils/ApplicationTypesAndGlobals";
+import { UserCartHeader } from "../../../Components/Cart/UserCartHeader/UserCartHeader";
+import { QtyHandle } from "../../../Components/Cart/QtyHandle/QtyHandle";
 
 export const Route = createFileRoute("/_client/clientPage/myCart")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { authenticatedUserCart, removeProductFromOrder } = useOrder();
+  const { removeProductFromOrder, allOrders } = useOrder();
   const { getProductById } = useProducts();
+  const { authenticatedUser } = useUser();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState("");
   const [idProductToDelete, setIdProductToDelete] = useState("");
+  const [cartId, setCartId] = useState<string>("");
   const [idOrderToDelete, setIdOrderToDelete] = useState("");
+  const [cartProducts, setCartProducts] = useState<TOrderProductQty[]>([]);
   const [shouldDisplayDeleteModal, setShouldDisplayDeleteModal] =
     useState<boolean>(false);
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-  if (!authenticatedUserCart) {
+  useEffect(() => {
+    let userCart: TOrder | undefined;
+    if (authenticatedUser) {
+      userCart = allOrders.find((order) => {
+        return (
+          order.clientId === authenticatedUser.id && order.status === "in_cart"
+        );
+      });
+      if (userCart) {
+        setCartProducts(userCart.productQty);
+        setCartId(userCart.id);
+      }
+    }
+  }, [allOrders]);
+
+  if (cartId === "") {
     return (
-      <>
-        <div className="product-cart-empty">
-          <h2>No user cart!</h2>
-        </div>
-      </>
+      <div className="product-cart-empty">
+        <h2>No cartFound!</h2>
+      </div>
     );
   }
-  if (authenticatedUserCart.productQty.length === 0) {
+
+  if (cartProducts.length === 0) {
     return (
-      <>
-        <div className="product-cart-empty">
-          <h2>No Products in your cart!</h2>
-        </div>
-      </>
+      <div className="product-cart-empty">
+        <h2>No Products in your cart!</h2>
+      </div>
     );
   }
 
   return (
     <>
+      <UserCartHeader cartId={cartId} cartProducts={cartProducts} />
       <div className="card-container">
-        {authenticatedUserCart?.productQty.map(({ productId, quantity }) => {
+        {cartProducts.map(({ productId, quantity }) => {
           const product = getProductById(productId);
 
           return (
-            <>
+            <React.Fragment key={productId}>
               {shouldDisplayDeleteModal && (
                 <WarningModal
-                  message=""
+                  message="Are you sure you want to remove this item from your cart?"
                   onCancel={() => setShouldDisplayDeleteModal(false)}
                   onConfirm={() => {
                     removeProductFromOrder(idOrderToDelete, idProductToDelete);
@@ -61,7 +82,7 @@ function RouteComponent() {
                 />
               )}
               {product && (
-                <div className="product-card-wrapper" key={product?.id}>
+                <div className="product-card-wrapper">
                   <ProductCard
                     product={product}
                     setIsModalOpen={setIsModalOpen}
@@ -69,7 +90,7 @@ function RouteComponent() {
                     buttonClass="remove"
                     buttonValue="Remove"
                     onBtnClickAction={() => {
-                      setIdOrderToDelete(authenticatedUserCart.id);
+                      setIdOrderToDelete(cartId);
                       setIdProductToDelete(product.id);
                       setShouldDisplayDeleteModal(true);
                     }}
@@ -77,11 +98,11 @@ function RouteComponent() {
                   <QtyHandle
                     productId={productId}
                     productQty={quantity}
-                    orderId={authenticatedUserCart!.id}
+                    orderId={cartId}
                   />
                 </div>
               )}
-            </>
+            </React.Fragment>
           );
         })}
       </div>

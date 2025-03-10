@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./QtyHandle.css";
-import { WarningModal } from "../WarningModal/WarningModal";
-import { useOrder } from "../../Providers/OrderProvider";
+import { useOrder } from "../../../Providers/OrderProvider";
+import { WarningModal } from "../../WarningModal/WarningModal";
 type TQtyHandleProps = {
   productId: string;
   productQty: number;
@@ -15,20 +15,20 @@ export const QtyHandle = ({
   const [productQtyInput, setProductQtyInput] = useState(1);
   const [shouldDisplayDeleteModal, setShouldDisplayDeleteModal] =
     useState<boolean>(false);
-  const { removeProductFromOrder } = useOrder();
+  const { removeProductFromOrder, changeProductQtyInOrder } = useOrder();
 
   const changeQty = (qty: number) => {
     const newQty = productQtyInput + qty;
     if (newQty < 1) {
       setShouldDisplayDeleteModal(true);
     } else {
-      setProductQtyInput(newQty);
+      changeProductQtyInOrder(orderId, productId, qty);
     }
   };
 
   useEffect(() => {
     setProductQtyInput(productQty);
-  }, []);
+  }, [productQty]);
   return (
     <>
       {shouldDisplayDeleteModal && (
