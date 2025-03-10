@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
-import { TOrderProductQty } from "../../../utils/ApplicationTypesAndGlobals";
+import {
+  TOrder,
+  TOrderProductQty,
+} from "../../../utils/ApplicationTypesAndGlobals";
 import "./UserCartHeader.css";
 import { useProducts } from "../../../Providers/ProductProvider";
 import { useOrder } from "../../../Providers/OrderProvider";
+import { useUser } from "../../../Providers/UserProvider";
 
 type TUserCartHeaderProps = {
   cartId: string;
@@ -15,7 +19,9 @@ export const UserCartHeader = ({
 }: TUserCartHeaderProps) => {
   const [totalItems, setTotalItems] = useState<number>(0);
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  const { getProductById, allProducts } = useProducts();
+  const { getProductById } = useProducts();
+  const { changeOrderStatus, addOrder } = useOrder();
+  const { authenticatedUser } = useUser();
 
   const getTotalPrice = () => {
     return cartProducts.reduce((acc, { productId, quantity }) => {
@@ -44,7 +50,22 @@ export const UserCartHeader = ({
         <span className="label">Total Price:</span>
         <span className="value">${totalPrice}</span>
       </div>
-      <button className="pay-button" onClick={() => {}}>
+      <button
+        className="pay-button"
+        onClick={() => {
+          changeOrderStatus(cartId, "ordered");
+          if (authenticatedUser) {
+            const newOrder: Omit<TOrder, "id"> = {
+              clientId: authenticatedUser.id,
+              deadLine: null,
+              productQty: [],
+              status: "in_cart",
+              workerId: undefined,
+            };
+            addOrder(newOrder);
+          }
+        }}
+      >
         Pay Now
       </button>
     </div>

@@ -154,12 +154,16 @@
       "productQty": [
         {
           "productId": "asdf",
+          "quantity": 5
+        },
+        {
+          "productId": "gfhjfe",
           "quantity": 1
         }
       ],
       "workerId": "undefined",
       "deadLine": "undefined",
-      "status": "in_cart"
+      "status": "ordered"
     },
     {
       "id": "02",
@@ -222,6 +226,25 @@
     {
       "id": "2612",
       "clientId": "gfgrty",
+      "deadLine": null,
+      "productQty": [],
+      "status": "in_cart"
+    },
+    {
+      "id": "3116",
+      "clientId": "asdasa",
+      "deadLine": null,
+      "productQty": [
+        {
+          "productId": "asdf",
+          "quantity": 1
+        }
+      ],
+      "status": "ordered"
+    },
+    {
+      "id": "d777",
+      "clientId": "asdasa",
       "deadLine": null,
       "productQty": [],
       "status": "in_cart"

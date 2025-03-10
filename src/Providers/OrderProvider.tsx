@@ -22,6 +22,11 @@ type TOrderContextProps = {
     productId: string,
     qty: number
   ) => void;
+  changeOrderStatus: (
+    orderId: string,
+    orderStatus: "in_cart" | "ordered" | "processing" | "ready" | "done"
+  ) => void;
+  addOrder: (newOrder: Omit<TOrder, "id">) => void;
 };
 const OrderContext = createContext<TOrderContextProps>(
   {} as TOrderContextProps
@@ -167,6 +172,19 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const addOrder = (newOrder: Omit<TOrder, "id">) => {
+    addOrderMutation.mutate(newOrder);
+  };
+
+  const changeOrderStatus = (
+    orderId: string,
+    orderStatus: "in_cart" | "ordered" | "processing" | "ready" | "done"
+  ) => {
+    const newOrder: Partial<Omit<TOrder, "id">> = {};
+    newOrder.status = orderStatus;
+    patchOrder.mutate({ orderId, partialOrder: newOrder });
+  };
+
   useEffect(() => {
     if (fetchedOrders) {
       setAllOrders(fetchedOrders);
@@ -185,10 +203,12 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
         allOrdersFetchError,
         isAllOrdersFetchError,
         isLoadingFetchAllOrders,
-        addProductToOrder: addProductToOrder,
+        addProductToOrder,
         getUserOrders,
         removeProductFromOrder,
         changeProductQtyInOrder,
+        changeOrderStatus,
+        addOrder,
       }}
     >
       {children}
