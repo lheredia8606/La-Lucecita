@@ -246,6 +246,30 @@
       "id": "d777",
       "clientId": "asdasa",
       "deadLine": null,
+      "productQty": [
+        {
+          "productId": "puouoi",
+          "quantity": 1
+        },
+        {
+          "productId": "qazwsd",
+          "quantity": 2
+        },
+        {
+          "productId": "asdf",
+          "quantity": 1
+        },
+        {
+          "productId": "gfhjfe",
+          "quantity": 1
+        }
+      ],
+      "status": "ordered"
+    },
+    {
+      "id": "6922",
+      "clientId": "asdasa",
+      "deadLine": null,
       "productQty": [],
       "status": "in_cart"
     }

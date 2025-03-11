@@ -17,29 +17,31 @@ export const UserCartHeader = ({
   cartId,
   cartProducts,
 }: TUserCartHeaderProps) => {
-  const [totalItems, setTotalItems] = useState<number>(0);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
+  // const [totalItems, setTotalItems] = useState<number>(0);
+  //const [totalPrice, setTotalPrice] = useState<number>(0);
   const { getProductById } = useProducts();
   const { changeOrderStatus, addOrder } = useOrder();
   const { authenticatedUser } = useUser();
 
-  const getTotalPrice = () => {
-    return cartProducts.reduce((acc, { productId, quantity }) => {
-      let product = getProductById(productId);
-      if (product) {
-        return Number((acc + product.price * quantity).toFixed(2));
-      }
-      return acc;
-    }, 0);
-  };
+  const totalItems = cartProducts.reduce((acc, val) => {
+    return acc + val.quantity;
+  }, 0);
 
-  useEffect(() => {
-    console.log("running useffect");
-    if (cartProducts) {
-      setTotalItems(cartProducts.length);
-      setTotalPrice(getTotalPrice());
+  const totalPrice = cartProducts.reduce((acc, { productId, quantity }) => {
+    let product = getProductById(productId);
+    if (product) {
+      return Number((acc + product.price * quantity).toFixed(2));
     }
-  }, [cartProducts]);
+    return acc;
+  }, 0);
+
+  // useEffect(() => {
+  //   console.log("running useffect");
+  //   if (cartProducts) {
+  //     setTotalItems(cartProducts.length);
+  //     setTotalPrice(getTotalPrice());
+  //   }
+  // }, [cartProducts]);
   return (
     <div className="cart-summary">
       <div className="cart-summary-item">
