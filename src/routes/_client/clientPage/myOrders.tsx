@@ -44,7 +44,9 @@ function RouteComponent() {
         </div>
       ) : (
         currentUserOrders.map((order) => (
-          <OrderCard key={order.id} order={order} />
+          <OrderCard key={order.id} order={order}>
+            <button className="order-btn">View Order</button>
+          </OrderCard>
         ))
       )}
     </>

@@ -39,13 +39,11 @@ export type TOrder = {
   clientId: string;
   productQty: TOrderProductQty[];
   workerId: string | undefined;
-  deadLine: Temporal.Instant | null;
+  deadLine: string | null;
   status: "in_cart" | "ordered" | "processing" | "ready" | "done";
 };
 
 export type TButtonProps = {
   btnText: string;
   navigateTo: string;
-  activeButton: string;
-  setActiveButton: (activeButton: string) => void;
 };

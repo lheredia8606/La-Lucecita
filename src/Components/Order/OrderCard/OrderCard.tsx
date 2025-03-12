@@ -1,12 +1,20 @@
+import { ReactNode } from "@tanstack/react-router";
 import { TOrder } from "../../../utils/ApplicationTypesAndGlobals";
+import {
+  getDateFromString,
+  getDaysUntilDeathLine,
+  getFormattedDate,
+} from "../../../utils/TemporalDate";
 import { OrderProdTable } from "../ProductTable/OrderProdTable";
 import "./OrderCard.css";
 
 type TOrderCardProps = {
   order: TOrder;
+  children: ReactNode;
 };
 export const OrderCard = ({
-  order: { id, status, productQty },
+  order: { id, status, productQty, deadLine },
+  children,
 }: TOrderCardProps) => {
   const getStatusClassName = (): string => {
     switch (status) {
@@ -21,6 +29,23 @@ export const OrderCard = ({
         return "status-complete";
     }
   };
+
+  const getDeadLineText = (deadLine: string | null): string => {
+    if (!deadLine) {
+      return "-";
+    } else {
+      const deadLineDate = getDateFromString(deadLine);
+      const remainingDays = getDaysUntilDeathLine(deadLineDate);
+      if (remainingDays < 1) {
+        return `${getFormattedDate(deadLineDate)} (Expired)`;
+      } else {
+        return (
+          `${getFormattedDate(deadLineDate)} (${remainingDays} Day` +
+          `${remainingDays === 1 ? "" : "s"} )`
+        );
+      }
+    }
+  };
   return (
     <>
       <div className="order-card">
@@ -33,11 +58,12 @@ export const OrderCard = ({
           </div>
           <p className="order-deadline">
             Deadline:{" "}
-            <span className="deadline-time">2025-03-05T15:00:00Z</span>
+            <span className="deadline-time">{getDeadLineText(deadLine)}</span>
           </p>
         </div>
         <OrderProdTable products={productQty} />
-        <button className="view-order-btn">View Order</button>
+        {children}
+        {/* <button className="view-order-btn">View Order</button> */}
       </div>
     </>
   );

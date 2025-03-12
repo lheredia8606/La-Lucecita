@@ -15,9 +15,12 @@ import { Route as RegisterImport } from './routes/register'
 import { Route as LoginImport } from './routes/login'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
-import { Route as WorkerUserIndexImport } from './routes/workerUser/index'
 import { Route as AdminUserIndexImport } from './routes/adminUser/index'
+import { Route as WorkerWorkerPageImport } from './routes/_worker/workerPage'
 import { Route as ClientClientPageImport } from './routes/_client/clientPage'
+import { Route as WorkerWorkerPageUnassignedOrdersImport } from './routes/_worker/workerPage/UnassignedOrders'
+import { Route as WorkerWorkerPageMyOrdersImport } from './routes/_worker/workerPage/MyOrders'
+import { Route as WorkerWorkerPageMyOrderHistoryImport } from './routes/_worker/workerPage/MyOrderHistory'
 import { Route as ClientClientPageProductsImport } from './routes/_client/clientPage/products'
 import { Route as ClientClientPageMyOrdersImport } from './routes/_client/clientPage/myOrders'
 import { Route as ClientClientPageMyCartImport } from './routes/_client/clientPage/myCart'
@@ -48,15 +51,15 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const WorkerUserIndexRoute = WorkerUserIndexImport.update({
-  id: '/workerUser/',
-  path: '/workerUser/',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const AdminUserIndexRoute = AdminUserIndexImport.update({
   id: '/adminUser/',
   path: '/adminUser/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const WorkerWorkerPageRoute = WorkerWorkerPageImport.update({
+  id: '/_worker/workerPage',
+  path: '/workerPage',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -65,6 +68,26 @@ const ClientClientPageRoute = ClientClientPageImport.update({
   path: '/clientPage',
   getParentRoute: () => rootRoute,
 } as any)
+
+const WorkerWorkerPageUnassignedOrdersRoute =
+  WorkerWorkerPageUnassignedOrdersImport.update({
+    id: '/UnassignedOrders',
+    path: '/UnassignedOrders',
+    getParentRoute: () => WorkerWorkerPageRoute,
+  } as any)
+
+const WorkerWorkerPageMyOrdersRoute = WorkerWorkerPageMyOrdersImport.update({
+  id: '/MyOrders',
+  path: '/MyOrders',
+  getParentRoute: () => WorkerWorkerPageRoute,
+} as any)
+
+const WorkerWorkerPageMyOrderHistoryRoute =
+  WorkerWorkerPageMyOrderHistoryImport.update({
+    id: '/MyOrderHistory',
+    path: '/MyOrderHistory',
+    getParentRoute: () => WorkerWorkerPageRoute,
+  } as any)
 
 const ClientClientPageProductsRoute = ClientClientPageProductsImport.update({
   id: '/products',
@@ -123,18 +146,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientClientPageImport
       parentRoute: typeof rootRoute
     }
+    '/_worker/workerPage': {
+      id: '/_worker/workerPage'
+      path: '/workerPage'
+      fullPath: '/workerPage'
+      preLoaderRoute: typeof WorkerWorkerPageImport
+      parentRoute: typeof rootRoute
+    }
     '/adminUser/': {
       id: '/adminUser/'
       path: '/adminUser'
       fullPath: '/adminUser'
       preLoaderRoute: typeof AdminUserIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/workerUser/': {
-      id: '/workerUser/'
-      path: '/workerUser'
-      fullPath: '/workerUser'
-      preLoaderRoute: typeof WorkerUserIndexImport
       parentRoute: typeof rootRoute
     }
     '/_client/clientPage/myCart': {
@@ -158,6 +181,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientClientPageProductsImport
       parentRoute: typeof ClientClientPageImport
     }
+    '/_worker/workerPage/MyOrderHistory': {
+      id: '/_worker/workerPage/MyOrderHistory'
+      path: '/MyOrderHistory'
+      fullPath: '/workerPage/MyOrderHistory'
+      preLoaderRoute: typeof WorkerWorkerPageMyOrderHistoryImport
+      parentRoute: typeof WorkerWorkerPageImport
+    }
+    '/_worker/workerPage/MyOrders': {
+      id: '/_worker/workerPage/MyOrders'
+      path: '/MyOrders'
+      fullPath: '/workerPage/MyOrders'
+      preLoaderRoute: typeof WorkerWorkerPageMyOrdersImport
+      parentRoute: typeof WorkerWorkerPageImport
+    }
+    '/_worker/workerPage/UnassignedOrders': {
+      id: '/_worker/workerPage/UnassignedOrders'
+      path: '/UnassignedOrders'
+      fullPath: '/workerPage/UnassignedOrders'
+      preLoaderRoute: typeof WorkerWorkerPageUnassignedOrdersImport
+      parentRoute: typeof WorkerWorkerPageImport
+    }
   }
 }
 
@@ -178,17 +222,35 @@ const ClientClientPageRouteChildren: ClientClientPageRouteChildren = {
 const ClientClientPageRouteWithChildren =
   ClientClientPageRoute._addFileChildren(ClientClientPageRouteChildren)
 
+interface WorkerWorkerPageRouteChildren {
+  WorkerWorkerPageMyOrderHistoryRoute: typeof WorkerWorkerPageMyOrderHistoryRoute
+  WorkerWorkerPageMyOrdersRoute: typeof WorkerWorkerPageMyOrdersRoute
+  WorkerWorkerPageUnassignedOrdersRoute: typeof WorkerWorkerPageUnassignedOrdersRoute
+}
+
+const WorkerWorkerPageRouteChildren: WorkerWorkerPageRouteChildren = {
+  WorkerWorkerPageMyOrderHistoryRoute: WorkerWorkerPageMyOrderHistoryRoute,
+  WorkerWorkerPageMyOrdersRoute: WorkerWorkerPageMyOrdersRoute,
+  WorkerWorkerPageUnassignedOrdersRoute: WorkerWorkerPageUnassignedOrdersRoute,
+}
+
+const WorkerWorkerPageRouteWithChildren =
+  WorkerWorkerPageRoute._addFileChildren(WorkerWorkerPageRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/clientPage': typeof ClientClientPageRouteWithChildren
+  '/workerPage': typeof WorkerWorkerPageRouteWithChildren
   '/adminUser': typeof AdminUserIndexRoute
-  '/workerUser': typeof WorkerUserIndexRoute
   '/clientPage/myCart': typeof ClientClientPageMyCartRoute
   '/clientPage/myOrders': typeof ClientClientPageMyOrdersRoute
   '/clientPage/products': typeof ClientClientPageProductsRoute
+  '/workerPage/MyOrderHistory': typeof WorkerWorkerPageMyOrderHistoryRoute
+  '/workerPage/MyOrders': typeof WorkerWorkerPageMyOrdersRoute
+  '/workerPage/UnassignedOrders': typeof WorkerWorkerPageUnassignedOrdersRoute
 }
 
 export interface FileRoutesByTo {
@@ -197,11 +259,14 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/clientPage': typeof ClientClientPageRouteWithChildren
+  '/workerPage': typeof WorkerWorkerPageRouteWithChildren
   '/adminUser': typeof AdminUserIndexRoute
-  '/workerUser': typeof WorkerUserIndexRoute
   '/clientPage/myCart': typeof ClientClientPageMyCartRoute
   '/clientPage/myOrders': typeof ClientClientPageMyOrdersRoute
   '/clientPage/products': typeof ClientClientPageProductsRoute
+  '/workerPage/MyOrderHistory': typeof WorkerWorkerPageMyOrderHistoryRoute
+  '/workerPage/MyOrders': typeof WorkerWorkerPageMyOrdersRoute
+  '/workerPage/UnassignedOrders': typeof WorkerWorkerPageUnassignedOrdersRoute
 }
 
 export interface FileRoutesById {
@@ -211,11 +276,14 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/_client/clientPage': typeof ClientClientPageRouteWithChildren
+  '/_worker/workerPage': typeof WorkerWorkerPageRouteWithChildren
   '/adminUser/': typeof AdminUserIndexRoute
-  '/workerUser/': typeof WorkerUserIndexRoute
   '/_client/clientPage/myCart': typeof ClientClientPageMyCartRoute
   '/_client/clientPage/myOrders': typeof ClientClientPageMyOrdersRoute
   '/_client/clientPage/products': typeof ClientClientPageProductsRoute
+  '/_worker/workerPage/MyOrderHistory': typeof WorkerWorkerPageMyOrderHistoryRoute
+  '/_worker/workerPage/MyOrders': typeof WorkerWorkerPageMyOrdersRoute
+  '/_worker/workerPage/UnassignedOrders': typeof WorkerWorkerPageUnassignedOrdersRoute
 }
 
 export interface FileRouteTypes {
@@ -226,11 +294,14 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/clientPage'
+    | '/workerPage'
     | '/adminUser'
-    | '/workerUser'
     | '/clientPage/myCart'
     | '/clientPage/myOrders'
     | '/clientPage/products'
+    | '/workerPage/MyOrderHistory'
+    | '/workerPage/MyOrders'
+    | '/workerPage/UnassignedOrders'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -238,11 +309,14 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/clientPage'
+    | '/workerPage'
     | '/adminUser'
-    | '/workerUser'
     | '/clientPage/myCart'
     | '/clientPage/myOrders'
     | '/clientPage/products'
+    | '/workerPage/MyOrderHistory'
+    | '/workerPage/MyOrders'
+    | '/workerPage/UnassignedOrders'
   id:
     | '__root__'
     | '/'
@@ -250,11 +324,14 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/_client/clientPage'
+    | '/_worker/workerPage'
     | '/adminUser/'
-    | '/workerUser/'
     | '/_client/clientPage/myCart'
     | '/_client/clientPage/myOrders'
     | '/_client/clientPage/products'
+    | '/_worker/workerPage/MyOrderHistory'
+    | '/_worker/workerPage/MyOrders'
+    | '/_worker/workerPage/UnassignedOrders'
   fileRoutesById: FileRoutesById
 }
 
@@ -264,8 +341,8 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   ClientClientPageRoute: typeof ClientClientPageRouteWithChildren
+  WorkerWorkerPageRoute: typeof WorkerWorkerPageRouteWithChildren
   AdminUserIndexRoute: typeof AdminUserIndexRoute
-  WorkerUserIndexRoute: typeof WorkerUserIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -274,8 +351,8 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   ClientClientPageRoute: ClientClientPageRouteWithChildren,
+  WorkerWorkerPageRoute: WorkerWorkerPageRouteWithChildren,
   AdminUserIndexRoute: AdminUserIndexRoute,
-  WorkerUserIndexRoute: WorkerUserIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -293,8 +370,8 @@ export const routeTree = rootRoute
         "/login",
         "/register",
         "/_client/clientPage",
-        "/adminUser/",
-        "/workerUser/"
+        "/_worker/workerPage",
+        "/adminUser/"
       ]
     },
     "/": {
@@ -317,11 +394,16 @@ export const routeTree = rootRoute
         "/_client/clientPage/products"
       ]
     },
+    "/_worker/workerPage": {
+      "filePath": "_worker/workerPage.tsx",
+      "children": [
+        "/_worker/workerPage/MyOrderHistory",
+        "/_worker/workerPage/MyOrders",
+        "/_worker/workerPage/UnassignedOrders"
+      ]
+    },
     "/adminUser/": {
       "filePath": "adminUser/index.jsx"
-    },
-    "/workerUser/": {
-      "filePath": "workerUser/index.jsx"
     },
     "/_client/clientPage/myCart": {
       "filePath": "_client/clientPage/myCart.tsx",
@@ -334,6 +416,18 @@ export const routeTree = rootRoute
     "/_client/clientPage/products": {
       "filePath": "_client/clientPage/products.tsx",
       "parent": "/_client/clientPage"
+    },
+    "/_worker/workerPage/MyOrderHistory": {
+      "filePath": "_worker/workerPage/MyOrderHistory.tsx",
+      "parent": "/_worker/workerPage"
+    },
+    "/_worker/workerPage/MyOrders": {
+      "filePath": "_worker/workerPage/MyOrders.tsx",
+      "parent": "/_worker/workerPage"
+    },
+    "/_worker/workerPage/UnassignedOrders": {
+      "filePath": "_worker/workerPage/UnassignedOrders.tsx",
+      "parent": "/_worker/workerPage"
     }
   }
 }

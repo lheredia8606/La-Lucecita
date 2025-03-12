@@ -75,7 +75,7 @@
   font-weight: bold;
 }
 
-.view-order-btn {
+.order-btn {
   width: 100%;
   padding: 12px;
   background-color: #007bff;
@@ -89,10 +89,10 @@
   margin-top: 14px;
 }
 
-.view-order-btn:hover {
+.order-btn:hover {
   background-color: #0056b3;
 }
 
-.view-order-btn:focus {
+.order-btn:focus {
   outline: none;
 }

@@ -1,24 +1,23 @@
-import { CustomButton } from "../CustomButton";
-import { TButtonProps } from "../../../utils/ApplicationTypesAndGlobals";
 import { useState } from "react";
+import { TButtonProps } from "../../../utils/ApplicationTypesAndGlobals";
+import { CustomButton } from "../CustomButton";
 
-export const UserProductBtnContainer = () => {
-  const [activeButton, setActiveButton] = useState("Products");
+export const WorkerBtnContainer = () => {
+  const [activeButton, setActiveButton] = useState("Unassigned Orders");
   const buttons: TButtonProps[] = [
     {
-      btnText: "Products",
-      navigateTo: "/clientPage/products",
+      btnText: "Unassigned Orders",
+      navigateTo: "/workerPage/UnassignedOrders",
     },
     {
       btnText: "My Orders",
-      navigateTo: "/clientPage/myOrders",
+      navigateTo: "/workerPage/MyOrders",
     },
     {
-      btnText: "My Cart",
-      navigateTo: "/clientPage/myCart",
+      btnText: "My Order history",
+      navigateTo: "/workerPage/MyOrderHistory",
     },
   ];
-
   return (
     <>
       <div className="button-container">

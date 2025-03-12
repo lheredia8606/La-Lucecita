@@ -25,7 +25,7 @@ function RootComponent() {
     } else if (authenticatedUser?.role === "client") {
       router.navigate({ to: "/clientPage/products" });
     } else if (authenticatedUser?.role === "worker") {
-      router.navigate({ to: "/workerUser" });
+      router.navigate({ to: "/workerPage/UnassignedOrders" });
     }
   };
   useEffect(() => {

@@ -37,7 +37,7 @@ function RouteComponent() {
       if (user.role === "admin") {
         toRoute = "/adminUser";
       } else if (user.role === "worker") {
-        toRoute = "/workerUser";
+        toRoute = "/workerPage/UnassignedOrders";
       } else {
         toRoute = "/clientPage/products";
       }

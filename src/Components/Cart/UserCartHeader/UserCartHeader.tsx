@@ -7,6 +7,7 @@ import "./UserCartHeader.css";
 import { useProducts } from "../../../Providers/ProductProvider";
 import { useOrder } from "../../../Providers/OrderProvider";
 import { useUser } from "../../../Providers/UserProvider";
+import { getOrderDeadLine } from "../../../utils/TemporalDate";
 
 type TUserCartHeaderProps = {
   cartId: string;
@@ -17,15 +18,27 @@ export const UserCartHeader = ({
   cartId,
   cartProducts,
 }: TUserCartHeaderProps) => {
-  // const [totalItems, setTotalItems] = useState<number>(0);
-  //const [totalPrice, setTotalPrice] = useState<number>(0);
   const { getProductById } = useProducts();
-  const { changeOrderStatus, addOrder } = useOrder();
+  const { changeOrder, addOrder } = useOrder();
   const { authenticatedUser } = useUser();
 
   const totalItems = cartProducts.reduce((acc, val) => {
     return acc + val.quantity;
   }, 0);
+
+  const onPayClick = () => {
+    changeOrder(cartId, { deadLine: getOrderDeadLine(7), status: "ordered" });
+    if (authenticatedUser) {
+      const newOrder: Omit<TOrder, "id"> = {
+        clientId: authenticatedUser.id,
+        deadLine: null,
+        productQty: [],
+        status: "in_cart",
+        workerId: undefined,
+      };
+      addOrder(newOrder);
+    }
+  };
 
   const totalPrice = cartProducts.reduce((acc, { productId, quantity }) => {
     let product = getProductById(productId);
@@ -35,13 +48,6 @@ export const UserCartHeader = ({
     return acc;
   }, 0);
 
-  // useEffect(() => {
-  //   console.log("running useffect");
-  //   if (cartProducts) {
-  //     setTotalItems(cartProducts.length);
-  //     setTotalPrice(getTotalPrice());
-  //   }
-  // }, [cartProducts]);
   return (
     <div className="cart-summary">
       <div className="cart-summary-item">
@@ -52,22 +58,7 @@ export const UserCartHeader = ({
         <span className="label">Total Price:</span>
         <span className="value">${totalPrice}</span>
       </div>
-      <button
-        className="pay-button"
-        onClick={() => {
-          changeOrderStatus(cartId, "ordered");
-          if (authenticatedUser) {
-            const newOrder: Omit<TOrder, "id"> = {
-              clientId: authenticatedUser.id,
-              deadLine: null,
-              productQty: [],
-              status: "in_cart",
-              workerId: undefined,
-            };
-            addOrder(newOrder);
-          }
-        }}
-      >
+      <button className="pay-button" onClick={onPayClick}>
         Pay Now
       </button>
     </div>
