@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { useUser } from "../Providers/UserProvider";
-import "./root-style.css";
+import "../styles/root/root-style.css";
 import { useEffect } from "react";
 
 export const Route = createRootRoute({
@@ -21,7 +21,7 @@ function RootComponent() {
       router.navigate({ to: "/" });
     }
     if (authenticatedUser?.role === "admin") {
-      router.navigate({ to: "/adminUser" });
+      router.navigate({ to: "/adminPage/UnassignedOrders" });
     } else if (authenticatedUser?.role === "client") {
       router.navigate({ to: "/clientPage/products" });
     } else if (authenticatedUser?.role === "worker") {

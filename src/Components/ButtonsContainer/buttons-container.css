@@ -1,6 +1,11 @@
 .button-container {
   width: 100%;
+  background: transparent;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
 }
+
 .custom-btn {
   padding: 10px 20px;
   font-size: 16px;

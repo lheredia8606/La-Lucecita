@@ -16,6 +16,12 @@ body {
   padding: 0;
 }
 
+body > #root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 header {
   background: #007bff;
   padding: 15px 0;
@@ -57,15 +63,8 @@ header {
   text-decoration: underline;
 }
 
-/* Make RootComponent full height */
-body > #root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
 main {
-  flex: 1; /* Makes main content take the remaining space */
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -73,10 +72,16 @@ main {
   text-align: center;
 }
 
+.content-container {
+  flex-grow: 1;
+  background-color: transparent;
+  height: 100%;
+}
+
 .footer {
   background: #333;
   color: white;
   text-align: center;
   padding: 15px 0;
-  margin-top: auto; /* Ensures footer stays at the bottom */
+  margin-top: auto;
 }

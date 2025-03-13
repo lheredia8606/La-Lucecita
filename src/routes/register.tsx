@@ -1,4 +1,4 @@
-import "./routes-styles/modal-style.css";
+import "../styles/modal/modal-style.css";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { CustomRegularInputsGroup } from "../Components/RegisterModalPage/RegularInputs/CustomRegularInputsGroup";

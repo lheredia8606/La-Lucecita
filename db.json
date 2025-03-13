@@ -7,11 +7,7 @@
       "email": "client@gmail.com",
       "password": "a",
       "role": "client",
-      "phone": [
-        "813",
-        "500",
-        "2587"
-      ],
+      "phone": ["813", "500", "2587"],
       "isActive": "true"
     },
     {
@@ -21,11 +17,7 @@
       "email": "bbmartinez@gmail.com",
       "password": "a",
       "role": "client",
-      "phone": [
-        "813",
-        "300",
-        "5699"
-      ],
+      "phone": ["813", "300", "5699"],
       "isActive": "false"
     },
     {
@@ -35,11 +27,7 @@
       "email": "sreynolds@gmail.com",
       "password": "a",
       "role": "client",
-      "phone": [
-        "813",
-        "564",
-        "0214"
-      ],
+      "phone": ["813", "564", "0214"],
       "isActive": "true"
     },
     {
@@ -49,11 +37,7 @@
       "email": "worker@gmail.com",
       "password": "a",
       "role": "worker",
-      "phone": [
-        "813",
-        "279",
-        "9512"
-      ],
+      "phone": ["813", "279", "9512"],
       "isActive": "true"
     },
     {
@@ -63,11 +47,7 @@
       "email": "eSinclair@gmail.com",
       "password": "a",
       "role": "worker",
-      "phone": [
-        "813",
-        "5471",
-        "3647"
-      ],
+      "phone": ["813", "5471", "3647"],
       "isActive": "false"
     },
     {
@@ -77,11 +57,7 @@
       "email": "eSmith@gmail.com",
       "password": "a",
       "role": "worker",
-      "phone": [
-        "813",
-        "341",
-        "3897"
-      ],
+      "phone": ["813", "341", "3897"],
       "isActive": "true"
     },
     {
@@ -91,11 +67,7 @@
       "email": "admin@gmail.com",
       "password": "a",
       "role": "admin",
-      "phone": [
-        "813",
-        "341",
-        "3897"
-      ],
+      "phone": ["813", "341", "3897"],
       "isActive": "true"
     },
     {
@@ -105,11 +77,7 @@
       "isActive": true,
       "lastName": "leo",
       "password": "leo",
-      "phone": [
-        "123",
-        "456",
-        "7890"
-      ],
+      "phone": ["123", "456", "7890"],
       "role": "client"
     }
   ],
@@ -213,6 +181,45 @@
     },
     {
       "id": "cd55",
+      "clientId": "asdasa",
+      "deadLine": "2025-03-19",
+      "productQty": [
+        {
+          "productId": "asdf",
+          "quantity": 1
+        }
+      ],
+      "status": "ordered"
+    },
+    {
+      "id": "cbfb",
+      "clientId": "asdbzli",
+      "deadLine": null,
+      "productQty": [],
+      "status": "in_cart"
+    },
+    {
+      "id": "52d2",
+      "clientId": "asdasa",
+      "deadLine": "2025-03-19",
+      "productQty": [
+        {
+          "productId": "asdf",
+          "quantity": 1
+        },
+        {
+          "productId": "gfhjfe",
+          "quantity": 1
+        },
+        {
+          "productId": "puouoi",
+          "quantity": 1
+        }
+      ],
+      "status": "ordered"
+    },
+    {
+      "id": "458c",
       "clientId": "asdasa",
       "deadLine": null,
       "productQty": [],

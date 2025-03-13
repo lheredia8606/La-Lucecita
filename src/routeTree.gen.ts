@@ -15,15 +15,16 @@ import { Route as RegisterImport } from './routes/register'
 import { Route as LoginImport } from './routes/login'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
-import { Route as AdminUserIndexImport } from './routes/adminUser/index'
 import { Route as WorkerWorkerPageImport } from './routes/_worker/workerPage'
 import { Route as ClientClientPageImport } from './routes/_client/clientPage'
+import { Route as AdminAdminPageImport } from './routes/_admin/adminPage'
 import { Route as WorkerWorkerPageUnassignedOrdersImport } from './routes/_worker/workerPage/UnassignedOrders'
 import { Route as WorkerWorkerPageMyOrdersImport } from './routes/_worker/workerPage/MyOrders'
 import { Route as WorkerWorkerPageMyOrderHistoryImport } from './routes/_worker/workerPage/MyOrderHistory'
 import { Route as ClientClientPageProductsImport } from './routes/_client/clientPage/products'
 import { Route as ClientClientPageMyOrdersImport } from './routes/_client/clientPage/myOrders'
 import { Route as ClientClientPageMyCartImport } from './routes/_client/clientPage/myCart'
+import { Route as AdminAdminPageUnassignedOrdersImport } from './routes/_admin/adminPage/UnassignedOrders'
 
 // Create/Update Routes
 
@@ -51,12 +52,6 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AdminUserIndexRoute = AdminUserIndexImport.update({
-  id: '/adminUser/',
-  path: '/adminUser/',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const WorkerWorkerPageRoute = WorkerWorkerPageImport.update({
   id: '/_worker/workerPage',
   path: '/workerPage',
@@ -66,6 +61,12 @@ const WorkerWorkerPageRoute = WorkerWorkerPageImport.update({
 const ClientClientPageRoute = ClientClientPageImport.update({
   id: '/_client/clientPage',
   path: '/clientPage',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AdminAdminPageRoute = AdminAdminPageImport.update({
+  id: '/_admin/adminPage',
+  path: '/adminPage',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -107,6 +108,13 @@ const ClientClientPageMyCartRoute = ClientClientPageMyCartImport.update({
   getParentRoute: () => ClientClientPageRoute,
 } as any)
 
+const AdminAdminPageUnassignedOrdersRoute =
+  AdminAdminPageUnassignedOrdersImport.update({
+    id: '/UnassignedOrders',
+    path: '/UnassignedOrders',
+    getParentRoute: () => AdminAdminPageRoute,
+  } as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -139,6 +147,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
+    '/_admin/adminPage': {
+      id: '/_admin/adminPage'
+      path: '/adminPage'
+      fullPath: '/adminPage'
+      preLoaderRoute: typeof AdminAdminPageImport
+      parentRoute: typeof rootRoute
+    }
     '/_client/clientPage': {
       id: '/_client/clientPage'
       path: '/clientPage'
@@ -153,12 +168,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkerWorkerPageImport
       parentRoute: typeof rootRoute
     }
-    '/adminUser/': {
-      id: '/adminUser/'
-      path: '/adminUser'
-      fullPath: '/adminUser'
-      preLoaderRoute: typeof AdminUserIndexImport
-      parentRoute: typeof rootRoute
+    '/_admin/adminPage/UnassignedOrders': {
+      id: '/_admin/adminPage/UnassignedOrders'
+      path: '/UnassignedOrders'
+      fullPath: '/adminPage/UnassignedOrders'
+      preLoaderRoute: typeof AdminAdminPageUnassignedOrdersImport
+      parentRoute: typeof AdminAdminPageImport
     }
     '/_client/clientPage/myCart': {
       id: '/_client/clientPage/myCart'
@@ -207,6 +222,18 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface AdminAdminPageRouteChildren {
+  AdminAdminPageUnassignedOrdersRoute: typeof AdminAdminPageUnassignedOrdersRoute
+}
+
+const AdminAdminPageRouteChildren: AdminAdminPageRouteChildren = {
+  AdminAdminPageUnassignedOrdersRoute: AdminAdminPageUnassignedOrdersRoute,
+}
+
+const AdminAdminPageRouteWithChildren = AdminAdminPageRoute._addFileChildren(
+  AdminAdminPageRouteChildren,
+)
+
 interface ClientClientPageRouteChildren {
   ClientClientPageMyCartRoute: typeof ClientClientPageMyCartRoute
   ClientClientPageMyOrdersRoute: typeof ClientClientPageMyOrdersRoute
@@ -242,9 +269,10 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/adminPage': typeof AdminAdminPageRouteWithChildren
   '/clientPage': typeof ClientClientPageRouteWithChildren
   '/workerPage': typeof WorkerWorkerPageRouteWithChildren
-  '/adminUser': typeof AdminUserIndexRoute
+  '/adminPage/UnassignedOrders': typeof AdminAdminPageUnassignedOrdersRoute
   '/clientPage/myCart': typeof ClientClientPageMyCartRoute
   '/clientPage/myOrders': typeof ClientClientPageMyOrdersRoute
   '/clientPage/products': typeof ClientClientPageProductsRoute
@@ -258,9 +286,10 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/adminPage': typeof AdminAdminPageRouteWithChildren
   '/clientPage': typeof ClientClientPageRouteWithChildren
   '/workerPage': typeof WorkerWorkerPageRouteWithChildren
-  '/adminUser': typeof AdminUserIndexRoute
+  '/adminPage/UnassignedOrders': typeof AdminAdminPageUnassignedOrdersRoute
   '/clientPage/myCart': typeof ClientClientPageMyCartRoute
   '/clientPage/myOrders': typeof ClientClientPageMyOrdersRoute
   '/clientPage/products': typeof ClientClientPageProductsRoute
@@ -275,9 +304,10 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/_admin/adminPage': typeof AdminAdminPageRouteWithChildren
   '/_client/clientPage': typeof ClientClientPageRouteWithChildren
   '/_worker/workerPage': typeof WorkerWorkerPageRouteWithChildren
-  '/adminUser/': typeof AdminUserIndexRoute
+  '/_admin/adminPage/UnassignedOrders': typeof AdminAdminPageUnassignedOrdersRoute
   '/_client/clientPage/myCart': typeof ClientClientPageMyCartRoute
   '/_client/clientPage/myOrders': typeof ClientClientPageMyOrdersRoute
   '/_client/clientPage/products': typeof ClientClientPageProductsRoute
@@ -293,9 +323,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/login'
     | '/register'
+    | '/adminPage'
     | '/clientPage'
     | '/workerPage'
-    | '/adminUser'
+    | '/adminPage/UnassignedOrders'
     | '/clientPage/myCart'
     | '/clientPage/myOrders'
     | '/clientPage/products'
@@ -308,9 +339,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/login'
     | '/register'
+    | '/adminPage'
     | '/clientPage'
     | '/workerPage'
-    | '/adminUser'
+    | '/adminPage/UnassignedOrders'
     | '/clientPage/myCart'
     | '/clientPage/myOrders'
     | '/clientPage/products'
@@ -323,9 +355,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/login'
     | '/register'
+    | '/_admin/adminPage'
     | '/_client/clientPage'
     | '/_worker/workerPage'
-    | '/adminUser/'
+    | '/_admin/adminPage/UnassignedOrders'
     | '/_client/clientPage/myCart'
     | '/_client/clientPage/myOrders'
     | '/_client/clientPage/products'
@@ -340,9 +373,9 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
+  AdminAdminPageRoute: typeof AdminAdminPageRouteWithChildren
   ClientClientPageRoute: typeof ClientClientPageRouteWithChildren
   WorkerWorkerPageRoute: typeof WorkerWorkerPageRouteWithChildren
-  AdminUserIndexRoute: typeof AdminUserIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -350,9 +383,9 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
+  AdminAdminPageRoute: AdminAdminPageRouteWithChildren,
   ClientClientPageRoute: ClientClientPageRouteWithChildren,
   WorkerWorkerPageRoute: WorkerWorkerPageRouteWithChildren,
-  AdminUserIndexRoute: AdminUserIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -369,9 +402,9 @@ export const routeTree = rootRoute
         "/about",
         "/login",
         "/register",
+        "/_admin/adminPage",
         "/_client/clientPage",
-        "/_worker/workerPage",
-        "/adminUser/"
+        "/_worker/workerPage"
       ]
     },
     "/": {
@@ -385,6 +418,12 @@ export const routeTree = rootRoute
     },
     "/register": {
       "filePath": "register.tsx"
+    },
+    "/_admin/adminPage": {
+      "filePath": "_admin/adminPage.tsx",
+      "children": [
+        "/_admin/adminPage/UnassignedOrders"
+      ]
     },
     "/_client/clientPage": {
       "filePath": "_client/clientPage.tsx",
@@ -402,8 +441,9 @@ export const routeTree = rootRoute
         "/_worker/workerPage/UnassignedOrders"
       ]
     },
-    "/adminUser/": {
-      "filePath": "adminUser/index.jsx"
+    "/_admin/adminPage/UnassignedOrders": {
+      "filePath": "_admin/adminPage/UnassignedOrders.tsx",
+      "parent": "/_admin/adminPage"
     },
     "/_client/clientPage/myCart": {
       "filePath": "_client/clientPage/myCart.tsx",

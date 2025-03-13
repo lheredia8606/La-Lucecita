@@ -5,7 +5,7 @@ import {
   useRouter,
 } from "@tanstack/react-router";
 import { useState } from "react";
-import "./routes-styles/modal-style.css";
+import "../styles/modal/modal-style.css";
 import { useUser } from "../Providers/UserProvider";
 import { ErrorModal } from "../Components/ErrorModal/ErrorModal";
 
@@ -35,7 +35,7 @@ function RouteComponent() {
       localStorage.setItem("authenticatedUser", user.id);
       let toRoute = "";
       if (user.role === "admin") {
-        toRoute = "/adminUser";
+        toRoute = "/adminPage/UnassignedOrders";
       } else if (user.role === "worker") {
         toRoute = "/workerPage/UnassignedOrders";
       } else {
