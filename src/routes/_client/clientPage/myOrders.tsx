@@ -6,6 +6,7 @@ import { ErrorModal } from "../../../Components/ErrorModal/ErrorModal";
 import { useUser } from "../../../Providers/UserProvider";
 import { useEffect, useState } from "react";
 import { TOrder } from "../../../utils/ApplicationTypesAndGlobals";
+import { useActiveBtn } from "../../../Providers/ActiveBtnProvider";
 
 export const Route = createFileRoute("/_client/clientPage/myOrders")({
   component: RouteComponent,
@@ -20,8 +21,13 @@ function RouteComponent() {
     isLoadingFetchAllOrders,
     isFetchingAllOrders,
   } = useOrder();
+  const { setActiveBtn } = useActiveBtn();
   const { authenticatedUser } = useUser();
   const [currentUserOrders, setCurrentUsersOrders] = useState<TOrder[]>([]);
+
+  useEffect(() => {
+    setActiveBtn("My Orders");
+  }, []);
 
   useEffect(() => {
     if (authenticatedUser) {

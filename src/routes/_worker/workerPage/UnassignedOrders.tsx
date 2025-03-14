@@ -2,10 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useOrder } from "../../../Providers/OrderProvider";
 import { Temporal } from "@js-temporal/polyfill";
 import { OrderCard } from "../../../Components/Order/OrderCard/OrderCard";
-import React from "react";
+import React, { useEffect } from "react";
 import { useUser } from "../../../Providers/UserProvider";
 import { TOrder } from "../../../utils/ApplicationTypesAndGlobals";
 import { SpinnerModal } from "../../../Components/SpinnerModal/SpinnerModal";
+import { useActiveBtn } from "../../../Providers/ActiveBtnProvider";
 
 export const Route = createFileRoute("/_worker/workerPage/UnassignedOrders")({
   component: RouteComponent,
@@ -14,6 +15,7 @@ export const Route = createFileRoute("/_worker/workerPage/UnassignedOrders")({
 function RouteComponent() {
   const { allOrders, changeOrder, isFetchingAllOrders } = useOrder();
   const { authenticatedUser } = useUser();
+  const { setActiveBtn } = useActiveBtn();
   const unassignedOrders = allOrders
     .filter((order) => {
       return order.status === "ordered";
@@ -35,6 +37,10 @@ function RouteComponent() {
     };
     changeOrder(orderId, toUpdate);
   };
+
+  useEffect(() => {
+    setActiveBtn("Unassigned Orders");
+  }, []);
 
   if (isFetchingAllOrders) {
     return <SpinnerModal />;

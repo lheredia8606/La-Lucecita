@@ -1,9 +1,9 @@
 import { CustomButton } from "../CustomButton";
 import { TButtonProps } from "../../../utils/ApplicationTypesAndGlobals";
-import { useState } from "react";
+import { useActiveBtn } from "../../../Providers/ActiveBtnProvider";
 
 export const UserProductBtnContainer = () => {
-  const [activeButton, setActiveButton] = useState("Products");
+  const { activeBtn, setActiveBtn } = useActiveBtn();
   const buttons: TButtonProps[] = [
     {
       btnText: "Products",
@@ -28,8 +28,8 @@ export const UserProductBtnContainer = () => {
               key={btnText}
               btnText={btnText}
               navigateTo={navigateTo}
-              activeButton={activeButton}
-              setActiveButton={setActiveButton}
+              activeButton={activeBtn}
+              setActiveButton={setActiveBtn}
             />
           );
         })}

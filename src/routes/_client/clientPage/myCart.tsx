@@ -13,6 +13,7 @@ import {
 import { UserCartHeader } from "../../../Components/Cart/UserCartHeader/UserCartHeader";
 import { QtyHandle } from "../../../Components/Cart/QtyHandle/QtyHandle";
 import { SpinnerModal } from "../../../Components/SpinnerModal/SpinnerModal";
+import { useActiveBtn } from "../../../Providers/ActiveBtnProvider";
 
 export const Route = createFileRoute("/_client/clientPage/myCart")({
   component: RouteComponent,
@@ -25,6 +26,7 @@ function RouteComponent() {
     isLoadingFetchAllOrders,
     isFetchingAllOrders,
   } = useOrder();
+  const { setActiveBtn } = useActiveBtn();
   const { getProductById } = useProducts();
   const { authenticatedUser } = useUser();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,6 +40,11 @@ function RouteComponent() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  useEffect(() => {
+    setActiveBtn("My Cart");
+  }, []);
+
   useEffect(() => {
     let userCart: TOrder | undefined;
     if (authenticatedUser) {
