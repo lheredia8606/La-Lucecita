@@ -1,6 +1,4 @@
-import { Temporal } from "@js-temporal/polyfill";
 import { apiHandler } from "./apiHandler";
-import { ButtonHTMLAttributes } from "react";
 
 //globals
 const baseUrl = "http://localhost:3000/";
@@ -34,13 +32,19 @@ export type TOrderProductQty = {
   productId: string;
   quantity: number;
 };
+export type TOrderStatus =
+  | "in_cart"
+  | "ordered"
+  | "processing"
+  | "ready"
+  | "done";
 export type TOrder = {
   id: string;
   clientId: string;
   productQty: TOrderProductQty[];
   workerId: string | undefined;
   deadLine: string | null;
-  status: "in_cart" | "ordered" | "processing" | "ready" | "done";
+  status: TOrderStatus;
 };
 
 export type TButtonProps = {

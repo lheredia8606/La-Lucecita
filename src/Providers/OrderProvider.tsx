@@ -4,11 +4,15 @@ import {
   apiOrders,
   TOrder,
   TOrderProductQty,
+  TOrderStatus,
 } from "../utils/ApplicationTypesAndGlobals";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useUser } from "./UserProvider";
+import { Temporal } from "@js-temporal/polyfill";
 
 type TOrderContextProps = {
+  sortOrdersByDeadline: (orders: TOrder[], modifier?: 1 | -1) => TOrder[];
+  getOrdersByStatus: (status: TOrderStatus) => TOrder[];
   allOrders: TOrder[];
   setAllOrders: (newOrders: TOrder[]) => void;
   isAllOrdersFetchError: boolean;
@@ -94,6 +98,24 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
       });
     }
     return [];
+  };
+
+  const getOrdersByStatus = (status: TOrderStatus) => {
+    return allOrders.filter((order) => {
+      return order.status === status;
+    });
+  };
+
+  const sortOrdersByDeadline = (orders: TOrder[], modifier: 1 | -1 = 1) => {
+    return orders.sort((a, b) => {
+      let tempA, tempB: Temporal.PlainDate;
+      if (a.deadLine && b.deadLine) {
+        tempA = Temporal.PlainDate.from(a.deadLine!);
+        tempB = Temporal.PlainDate.from(b.deadLine!);
+        return (tempA.day - tempB.day) * modifier;
+      }
+      return 1;
+    });
   };
 
   const removeProductFromOrder = (orderId: string, productId: string) => {
@@ -199,6 +221,7 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     <OrderContext.Provider
       value={{
         allOrders,
+        sortOrdersByDeadline,
         setAllOrders,
         allOrdersFetchError,
         isAllOrdersFetchError,
@@ -210,6 +233,7 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
         changeOrder,
         addOrder,
         isFetchingAllOrders,
+        getOrdersByStatus,
       }}
     >
       {children}

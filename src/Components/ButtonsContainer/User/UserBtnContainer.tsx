@@ -29,7 +29,6 @@ export const UserProductBtnContainer = () => {
               btnText={btnText}
               navigateTo={navigateTo}
               activeButton={activeBtn}
-              setActiveButton={setActiveBtn}
             />
           );
         })}

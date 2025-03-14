@@ -6,14 +6,12 @@ type TCustomButtonProps = {
   btnText: string;
   navigateTo: string;
   activeButton: string;
-  setActiveButton: (activeButton: string) => void;
 };
 
 export const CustomButton = ({
   btnText,
   navigateTo,
   activeButton,
-  setActiveButton,
 }: TCustomButtonProps) => {
   const router = useRouter();
   return (
@@ -23,7 +21,6 @@ export const CustomButton = ({
           btnText === activeButton ? "custom-btn active" : "custom-btn"
         }
         onClick={() => {
-          setActiveButton(btnText);
           router.navigate({ to: navigateTo });
         }}
       >
