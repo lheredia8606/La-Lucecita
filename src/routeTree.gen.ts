@@ -25,6 +25,7 @@ import { Route as ClientClientPageProductsImport } from './routes/_client/client
 import { Route as ClientClientPageMyOrdersImport } from './routes/_client/clientPage/myOrders'
 import { Route as ClientClientPageMyCartImport } from './routes/_client/clientPage/myCart'
 import { Route as AdminAdminPageUnassignedOrdersImport } from './routes/_admin/adminPage/UnassignedOrders'
+import { Route as AdminAdminPagePendingOrdersImport } from './routes/_admin/adminPage/PendingOrders'
 
 // Create/Update Routes
 
@@ -115,6 +116,13 @@ const AdminAdminPageUnassignedOrdersRoute =
     getParentRoute: () => AdminAdminPageRoute,
   } as any)
 
+const AdminAdminPagePendingOrdersRoute =
+  AdminAdminPagePendingOrdersImport.update({
+    id: '/PendingOrders',
+    path: '/PendingOrders',
+    getParentRoute: () => AdminAdminPageRoute,
+  } as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -167,6 +175,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/workerPage'
       preLoaderRoute: typeof WorkerWorkerPageImport
       parentRoute: typeof rootRoute
+    }
+    '/_admin/adminPage/PendingOrders': {
+      id: '/_admin/adminPage/PendingOrders'
+      path: '/PendingOrders'
+      fullPath: '/adminPage/PendingOrders'
+      preLoaderRoute: typeof AdminAdminPagePendingOrdersImport
+      parentRoute: typeof AdminAdminPageImport
     }
     '/_admin/adminPage/UnassignedOrders': {
       id: '/_admin/adminPage/UnassignedOrders'
@@ -223,10 +238,12 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AdminAdminPageRouteChildren {
+  AdminAdminPagePendingOrdersRoute: typeof AdminAdminPagePendingOrdersRoute
   AdminAdminPageUnassignedOrdersRoute: typeof AdminAdminPageUnassignedOrdersRoute
 }
 
 const AdminAdminPageRouteChildren: AdminAdminPageRouteChildren = {
+  AdminAdminPagePendingOrdersRoute: AdminAdminPagePendingOrdersRoute,
   AdminAdminPageUnassignedOrdersRoute: AdminAdminPageUnassignedOrdersRoute,
 }
 
@@ -272,6 +289,7 @@ export interface FileRoutesByFullPath {
   '/adminPage': typeof AdminAdminPageRouteWithChildren
   '/clientPage': typeof ClientClientPageRouteWithChildren
   '/workerPage': typeof WorkerWorkerPageRouteWithChildren
+  '/adminPage/PendingOrders': typeof AdminAdminPagePendingOrdersRoute
   '/adminPage/UnassignedOrders': typeof AdminAdminPageUnassignedOrdersRoute
   '/clientPage/myCart': typeof ClientClientPageMyCartRoute
   '/clientPage/myOrders': typeof ClientClientPageMyOrdersRoute
@@ -289,6 +307,7 @@ export interface FileRoutesByTo {
   '/adminPage': typeof AdminAdminPageRouteWithChildren
   '/clientPage': typeof ClientClientPageRouteWithChildren
   '/workerPage': typeof WorkerWorkerPageRouteWithChildren
+  '/adminPage/PendingOrders': typeof AdminAdminPagePendingOrdersRoute
   '/adminPage/UnassignedOrders': typeof AdminAdminPageUnassignedOrdersRoute
   '/clientPage/myCart': typeof ClientClientPageMyCartRoute
   '/clientPage/myOrders': typeof ClientClientPageMyOrdersRoute
@@ -307,6 +326,7 @@ export interface FileRoutesById {
   '/_admin/adminPage': typeof AdminAdminPageRouteWithChildren
   '/_client/clientPage': typeof ClientClientPageRouteWithChildren
   '/_worker/workerPage': typeof WorkerWorkerPageRouteWithChildren
+  '/_admin/adminPage/PendingOrders': typeof AdminAdminPagePendingOrdersRoute
   '/_admin/adminPage/UnassignedOrders': typeof AdminAdminPageUnassignedOrdersRoute
   '/_client/clientPage/myCart': typeof ClientClientPageMyCartRoute
   '/_client/clientPage/myOrders': typeof ClientClientPageMyOrdersRoute
@@ -326,6 +346,7 @@ export interface FileRouteTypes {
     | '/adminPage'
     | '/clientPage'
     | '/workerPage'
+    | '/adminPage/PendingOrders'
     | '/adminPage/UnassignedOrders'
     | '/clientPage/myCart'
     | '/clientPage/myOrders'
@@ -342,6 +363,7 @@ export interface FileRouteTypes {
     | '/adminPage'
     | '/clientPage'
     | '/workerPage'
+    | '/adminPage/PendingOrders'
     | '/adminPage/UnassignedOrders'
     | '/clientPage/myCart'
     | '/clientPage/myOrders'
@@ -358,6 +380,7 @@ export interface FileRouteTypes {
     | '/_admin/adminPage'
     | '/_client/clientPage'
     | '/_worker/workerPage'
+    | '/_admin/adminPage/PendingOrders'
     | '/_admin/adminPage/UnassignedOrders'
     | '/_client/clientPage/myCart'
     | '/_client/clientPage/myOrders'
@@ -422,6 +445,7 @@ export const routeTree = rootRoute
     "/_admin/adminPage": {
       "filePath": "_admin/adminPage.tsx",
       "children": [
+        "/_admin/adminPage/PendingOrders",
         "/_admin/adminPage/UnassignedOrders"
       ]
     },
@@ -440,6 +464,10 @@ export const routeTree = rootRoute
         "/_worker/workerPage/MyOrders",
         "/_worker/workerPage/UnassignedOrders"
       ]
+    },
+    "/_admin/adminPage/PendingOrders": {
+      "filePath": "_admin/adminPage/PendingOrders.tsx",
+      "parent": "/_admin/adminPage"
     },
     "/_admin/adminPage/UnassignedOrders": {
       "filePath": "_admin/adminPage/UnassignedOrders.tsx",

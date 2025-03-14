@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useOrder } from "../../../Providers/OrderProvider";
 import { OrderCard } from "../../../Components/Order/OrderCard/OrderCard";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AdminAssignOrder } from "../../../Components/User/Admin/AdminAssignOrder";
 import { ErrorModal } from "../../../Components/ErrorModal/ErrorModal";
+import { useActiveBtn } from "../../../Providers/ActiveBtnProvider";
 
 export const Route = createFileRoute("/_admin/adminPage/UnassignedOrders")({
   component: RouteComponent,
@@ -11,12 +12,16 @@ export const Route = createFileRoute("/_admin/adminPage/UnassignedOrders")({
 
 function RouteComponent() {
   const { allOrders } = useOrder();
+  const { setActiveBtn } = useActiveBtn();
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const unassigned = allOrders.filter((order) => {
     return order.status === "ordered";
   });
+  useEffect(() => {
+    setActiveBtn("Unassigned Orders");
+  }, []);
 
   if (isError) {
     return (

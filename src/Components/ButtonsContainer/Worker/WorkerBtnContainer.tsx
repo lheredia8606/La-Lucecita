@@ -30,7 +30,6 @@ export const WorkerBtnContainer = () => {
               btnText={btnText}
               navigateTo={navigateTo}
               activeButton={activeBtn}
-              setActiveButton={setActiveButton}
             />
           );
         })}
