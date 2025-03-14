@@ -1,3 +1,4 @@
+import "../../../styles/root/root-style.css";
 import { createFileRoute } from "@tanstack/react-router";
 import { useProducts } from "../../../Providers/ProductProvider";
 import { ProductCard } from "../../../Components/ProductCard/ProductCard";
@@ -11,13 +12,19 @@ import {
 } from "../../../utils/ApplicationTypesAndGlobals";
 import { UserCartHeader } from "../../../Components/Cart/UserCartHeader/UserCartHeader";
 import { QtyHandle } from "../../../Components/Cart/QtyHandle/QtyHandle";
+import { SpinnerModal } from "../../../Components/SpinnerModal/SpinnerModal";
 
 export const Route = createFileRoute("/_client/clientPage/myCart")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { removeProductFromOrder, allOrders } = useOrder();
+  const {
+    removeProductFromOrder,
+    allOrders,
+    isLoadingFetchAllOrders,
+    isFetchingAllOrders,
+  } = useOrder();
   const { getProductById } = useProducts();
   const { authenticatedUser } = useUser();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,9 +53,13 @@ function RouteComponent() {
     }
   }, [allOrders]);
 
+  if (isLoadingFetchAllOrders || isFetchingAllOrders) {
+    return <SpinnerModal />;
+  }
+
   if (cartId === "") {
     return (
-      <div className="product-cart-empty">
+      <div className="empty-container">
         <h2>No cartFound!</h2>
       </div>
     );
@@ -56,7 +67,7 @@ function RouteComponent() {
 
   if (cartProducts.length === 0) {
     return (
-      <div className="product-cart-empty">
+      <div className="empty-container">
         <h2>No Products in your cart!</h2>
       </div>
     );

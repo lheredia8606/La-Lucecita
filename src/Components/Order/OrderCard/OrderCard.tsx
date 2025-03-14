@@ -63,7 +63,6 @@ export const OrderCard = ({
         </div>
         <OrderProdTable products={productQty} />
         {children}
-        {/* <button className="view-order-btn">View Order</button> */}
       </div>
     </>
   );

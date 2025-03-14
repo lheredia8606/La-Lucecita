@@ -3,13 +3,14 @@ import { useOrder } from "../../../Providers/OrderProvider";
 import { useUser } from "../../../Providers/UserProvider";
 import React from "react";
 import { OrderCard } from "../../../Components/Order/OrderCard/OrderCard";
+import { SpinnerModal } from "../../../Components/SpinnerModal/SpinnerModal";
 
 export const Route = createFileRoute("/_worker/workerPage/MyOrderHistory")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { allOrders } = useOrder();
+  const { allOrders, isFetchingAllOrders } = useOrder();
   const { authenticatedUser } = useUser();
 
   const myOrderHistory = allOrders.filter((order) => {
@@ -18,6 +19,18 @@ function RouteComponent() {
       (order.status === "done" || order.status === "ready")
     );
   });
+
+  if (isFetchingAllOrders) {
+    return <SpinnerModal />;
+  }
+
+  if (myOrderHistory.length === 0) {
+    return (
+      <div className="empty-container">
+        <h2>You don't have orders!</h2>
+      </div>
+    );
+  }
 
   return (
     <>

@@ -14,6 +14,7 @@ type TOrderContextProps = {
   isAllOrdersFetchError: boolean;
   allOrdersFetchError: Error | null;
   isLoadingFetchAllOrders: boolean;
+  isFetchingAllOrders: boolean;
   getUserOrders: (userId: string | null) => TOrder[];
   removeProductFromOrder: (orderId: string, productId: string) => void;
   addProductToOrder: (productId: string, orderId?: string) => void;
@@ -42,6 +43,7 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     isError: isAllOrdersFetchError,
     error: allOrdersFetchError,
     isLoading: isLoadingFetchAllOrders,
+    isFetching: isFetchingAllOrders,
   } = useQuery({
     queryKey: ["getAllOrders"],
     queryFn: () => apiOrders.getAll(),
@@ -207,6 +209,7 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
         changeProductQtyInOrder,
         changeOrder,
         addOrder,
+        isFetchingAllOrders,
       }}
     >
       {children}

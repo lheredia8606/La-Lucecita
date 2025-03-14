@@ -12,12 +12,18 @@ import { useQuery } from "@tanstack/react-query";
 type TContextProps = {
   allProducts: TProduct[];
   getProductById: (id: string) => TProduct | undefined;
+  isFetchingAllProducts: boolean;
+  isLoadingAllProducts: boolean;
 };
 const productContext = createContext({} as TContextProps);
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [allProducts, setAllProducts] = useState<TProduct[]>([]);
 
-  const { data: fetchedProducts } = useQuery({
+  const {
+    data: fetchedProducts,
+    isFetching: isFetchingAllProducts,
+    isLoading: isLoadingAllProducts,
+  } = useQuery({
     queryKey: ["getAllProducts"],
     queryFn: () => apiProducts.getAll(),
   });
@@ -37,7 +43,14 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [fetchedProducts]);
   return (
-    <productContext.Provider value={{ allProducts, getProductById }}>
+    <productContext.Provider
+      value={{
+        allProducts,
+        getProductById,
+        isLoadingAllProducts,
+        isFetchingAllProducts,
+      }}
+    >
       {children}
     </productContext.Provider>
   );

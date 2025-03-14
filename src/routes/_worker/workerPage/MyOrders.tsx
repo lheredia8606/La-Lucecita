@@ -4,13 +4,14 @@ import { useUser } from "../../../Providers/UserProvider";
 import React from "react";
 import { OrderCard } from "../../../Components/Order/OrderCard/OrderCard";
 import { TOrder } from "../../../utils/ApplicationTypesAndGlobals";
+import { SpinnerModal } from "../../../Components/SpinnerModal/SpinnerModal";
 
 export const Route = createFileRoute("/_worker/workerPage/MyOrders")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { allOrders, changeOrder } = useOrder();
+  const { allOrders, changeOrder, isFetchingAllOrders } = useOrder();
   const { authenticatedUser } = useUser();
   const myOrders = allOrders.filter((order) => {
     return (
@@ -24,6 +25,19 @@ function RouteComponent() {
     };
     changeOrder(orderId, toUpdate);
   };
+
+  if (isFetchingAllOrders) {
+    return <SpinnerModal />;
+  }
+
+  if (myOrders.length === 0) {
+    return (
+      <div className="empty-container">
+        <h2>You don't have orders!</h2>
+      </div>
+    );
+  }
+
   return (
     <>
       {myOrders.map((order) => {

@@ -18,13 +18,25 @@ export const UserCartHeader = ({
   cartId,
   cartProducts,
 }: TUserCartHeaderProps) => {
+  const [isLoading, setIsLoading] = useState(false);
   const { getProductById } = useProducts();
-  const { changeOrder, addOrder } = useOrder();
+  const {
+    changeOrder,
+    addOrder,
+    isLoadingFetchAllOrders,
+    isFetchingAllOrders,
+  } = useOrder();
   const { authenticatedUser } = useUser();
 
   const totalItems = cartProducts.reduce((acc, val) => {
     return acc + val.quantity;
   }, 0);
+
+  useEffect(() => {
+    if (!isFetchingAllOrders && !isLoadingFetchAllOrders) {
+      setIsLoading(false);
+    }
+  }, [isFetchingAllOrders, isFetchingAllOrders]);
 
   const onPayClick = () => {
     changeOrder(cartId, { deadLine: getOrderDeadLine(7), status: "ordered" });
@@ -37,6 +49,7 @@ export const UserCartHeader = ({
         workerId: undefined,
       };
       addOrder(newOrder);
+      setIsLoading(true);
     }
   };
 
@@ -58,7 +71,7 @@ export const UserCartHeader = ({
         <span className="label">Total Price:</span>
         <span className="value">${totalPrice}</span>
       </div>
-      <button className="pay-button" onClick={onPayClick}>
+      <button className="pay-button" disabled={isLoading} onClick={onPayClick}>
         Pay Now
       </button>
     </div>

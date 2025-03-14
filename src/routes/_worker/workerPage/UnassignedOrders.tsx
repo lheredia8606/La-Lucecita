@@ -5,13 +5,14 @@ import { OrderCard } from "../../../Components/Order/OrderCard/OrderCard";
 import React from "react";
 import { useUser } from "../../../Providers/UserProvider";
 import { TOrder } from "../../../utils/ApplicationTypesAndGlobals";
+import { SpinnerModal } from "../../../Components/SpinnerModal/SpinnerModal";
 
 export const Route = createFileRoute("/_worker/workerPage/UnassignedOrders")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { allOrders, changeOrder } = useOrder();
+  const { allOrders, changeOrder, isFetchingAllOrders } = useOrder();
   const { authenticatedUser } = useUser();
   const unassignedOrders = allOrders
     .filter((order) => {
@@ -34,6 +35,18 @@ function RouteComponent() {
     };
     changeOrder(orderId, toUpdate);
   };
+
+  if (isFetchingAllOrders) {
+    return <SpinnerModal />;
+  }
+
+  if (unassignedOrders.length === 0) {
+    return (
+      <div className="empty-container">
+        <h2>No unassigned orders!</h2>
+      </div>
+    );
+  }
   return (
     <>
       {unassignedOrders.map((order) => {

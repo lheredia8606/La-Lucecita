@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useProducts } from "../../../Providers/ProductProvider";
 import { ProductCard } from "../../../Components/ProductCard/ProductCard";
 import { useOrder } from "../../../Providers/OrderProvider";
+import { SpinnerModal } from "../../../Components/SpinnerModal/SpinnerModal";
 
 export const Route = createFileRoute("/_client/clientPage/products")({
   component: RouteComponent,
@@ -11,11 +12,17 @@ export const Route = createFileRoute("/_client/clientPage/products")({
 function RouteComponent() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState("");
-  const { allProducts } = useProducts();
+  const { allProducts, isFetchingAllProducts, isLoadingAllProducts } =
+    useProducts();
   const { addProductToOrder: addProductToCart } = useOrder();
   const handleCloseModal = () => {
     setIsModalOpen(false); // Close modal
   };
+
+  if (isFetchingAllProducts || isLoadingAllProducts) {
+    return <SpinnerModal />;
+  }
+
   return (
     <>
       <div className="card-container">

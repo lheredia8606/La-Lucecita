@@ -18,6 +18,7 @@ function RouteComponent() {
     allOrdersFetchError,
     isAllOrdersFetchError,
     isLoadingFetchAllOrders,
+    isFetchingAllOrders,
   } = useOrder();
   const { authenticatedUser } = useUser();
   const [currentUserOrders, setCurrentUsersOrders] = useState<TOrder[]>([]);
@@ -27,7 +28,7 @@ function RouteComponent() {
       setCurrentUsersOrders(getUserOrders(authenticatedUser.id));
     }
   }, [allOrders]);
-  if (isLoadingFetchAllOrders) {
+  if (isLoadingFetchAllOrders || isFetchingAllOrders) {
     return <SpinnerModal />;
   }
   if (isAllOrdersFetchError) {
@@ -35,20 +36,15 @@ function RouteComponent() {
       <ErrorModal message={allOrdersFetchError!.message} onClose={() => {}} />
     );
   }
+
+  currentUserOrders;
   return (
     <>
-      <div className="user-container"></div>
-      {currentUserOrders.length === 0 ? (
-        <div>
-          <h2>Create a Order to see it here!</h2>
-        </div>
-      ) : (
-        currentUserOrders.map((order) => (
-          <OrderCard key={order.id} order={order}>
-            <button className="order-btn">View Order</button>
-          </OrderCard>
-        ))
-      )}
+      {currentUserOrders.map((order) => (
+        <OrderCard key={order.id} order={order}>
+          <button className="order-btn">View Order</button>
+        </OrderCard>
+      ))}
     </>
   );
 }
